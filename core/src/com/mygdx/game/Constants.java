@@ -1,6 +1,7 @@
 package com.mygdx.game;
 
 /**
+ * @author Gabe Werick
  * This class contains the Constants to be used in the game
  */
 public class Constants
