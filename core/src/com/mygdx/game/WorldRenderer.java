@@ -56,6 +56,7 @@ public class WorldRenderer implements Disposable
 	 */
 	private void renderTestObjects()
 	{
+		worldController.cameraHelper.applyTo(camera);
 		// sets batch to use the object information from camera for rendering
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
