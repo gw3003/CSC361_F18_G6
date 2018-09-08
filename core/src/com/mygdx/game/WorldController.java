@@ -24,6 +24,8 @@ public class WorldController extends InputAdapter
 	public Sprite[] testSprites;
 	public int selectedSprite;
 	
+	public CameraHelper cameraHelper;
+	
 	/**
 	 * Constructor for WorldController.
 	 */
@@ -39,6 +41,7 @@ public class WorldController extends InputAdapter
 	public void init()
 	{
 		Gdx.input.setInputProcessor(this);
+		cameraHelper = new CameraHelper();
 		initTestObjects();
 	}
 	
@@ -61,8 +64,21 @@ public class WorldController extends InputAdapter
 		else if (keycode == Keys.SPACE)
 		{
 			selectedSprite = (selectedSprite + 1) % testSprites.length;
+			// Update camera's target to follow the currently selected sprite
+			if (cameraHelper.hasTarget())
+			{
+				cameraHelper.setTarget(testSprites[selectedSprite]);
+			}
 			Gdx.app.debug(TAG,  "Sprite #" + selectedSprite + " selected");
 		}
+		
+		// Toggle camera follow
+		else if (keycode == Keys.ENTER)
+		{
+			cameraHelper.setTarget(cameraHelper.hasTarget() ? null : testSprites[selectedSprite]);
+			Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+		}
+		
 		return false;
 	}
 	
@@ -130,6 +146,7 @@ public class WorldController extends InputAdapter
 	{
 		handleDebugInput(deltaTime);
 		updateTestObjects(deltaTime);
+		cameraHelper.update(deltaTime);
 	}
 	
 	/**
