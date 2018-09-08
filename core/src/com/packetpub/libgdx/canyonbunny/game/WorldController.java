@@ -1,11 +1,12 @@
-package com.mygdx.game;
+package com.packetpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.graphics.Pixmap;
+
 import com.badlogic.gdx.graphics.Pixmap.Format;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
-
+import com.packetpub.libgdx.canyonbunny.util.CameraHelper;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
@@ -167,7 +168,7 @@ public class WorldController extends InputAdapter
 		if (Gdx.input.isKeyPressed(Keys.W))
 			moveSelectedSprite(0, sprMoveSpeed);
 		if (Gdx.input.isKeyPressed(Keys.S))
-			moveSelectedSprite(0, sprMoveSpeed);
+			moveSelectedSprite(0, -sprMoveSpeed);
 		
 		// Camera Controls (move)
 		float camMoveSpeed = 5 * deltaTime;

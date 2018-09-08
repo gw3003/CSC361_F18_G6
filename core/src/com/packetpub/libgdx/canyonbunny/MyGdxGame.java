@@ -1,4 +1,4 @@
-package com.mygdx.game;
+package com.packetpub.libgdx.canyonbunny;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
