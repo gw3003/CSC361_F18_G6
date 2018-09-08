@@ -9,12 +9,13 @@ import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.InputAdapter;
 
 /**
  * @author Kevin Rutter
  * Contains controls for the game, such as for the camera, movement, etc.
  */
-public class WorldController
+public class WorldController extends InputAdapter
 {
 	// Tag used for logging purposes
 	private static final String TAG =
@@ -37,7 +38,32 @@ public class WorldController
 	 */
 	public void init()
 	{
+		Gdx.input.setInputProcessor(this);
 		initTestObjects();
+	}
+	
+	/**
+	 * Resets game if R is pressed, changes selected sprite if space is pressed.
+	 * @param keycode	The key that was released.
+	 * @return			false
+	 */
+	@Override
+	public boolean keyUp(int keycode)
+	{
+		// Reset game world
+		if (keycode == Keys.R)
+		{
+			init();
+			Gdx.app.debug(TAG, "Game world resetted");
+		}
+		
+		// Select next sprite
+		else if (keycode == Keys.SPACE)
+		{
+			selectedSprite = (selectedSprite + 1) % testSprites.length;
+			Gdx.app.debug(TAG,  "Sprite #" + selectedSprite + " selected");
+		}
+		return false;
 	}
 	
 	/**
