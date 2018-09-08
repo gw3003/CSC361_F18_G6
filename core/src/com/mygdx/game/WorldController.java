@@ -6,6 +6,10 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+
 /**
  * @author Kevin Rutter
  * Contains controls for the game, such as for the camera, movement, etc.
@@ -98,7 +102,39 @@ public class WorldController
 	 */
 	public void update(float deltaTime)
 	{
+		handleDebugInput(deltaTime);
 		updateTestObjects(deltaTime);
+	}
+	
+	/**
+	 * Tests out movement of sprites.
+	 * @param deltaTime		How much time since last frame.
+	 */
+	private void handleDebugInput(float deltaTime)
+	{
+		if (Gdx.app.getType() != ApplicationType.Desktop)
+			return;
+		
+		// Selected Sprite Controls
+		float sprMoveSpeed = 5 * deltaTime;
+		if (Gdx.input.isKeyPressed(Keys.A))
+			moveSelectedSprite(-sprMoveSpeed, 0);
+		if (Gdx.input.isKeyPressed(Keys.D))
+			moveSelectedSprite(sprMoveSpeed, 0);
+		if (Gdx.input.isKeyPressed(Keys.W))
+			moveSelectedSprite(0, sprMoveSpeed);
+		if (Gdx.input.isKeyPressed(Keys.S))
+			moveSelectedSprite(0, sprMoveSpeed);
+	}
+	
+	/**
+	 * Moves the currently selected sprite in a given direction.
+	 * @param x		Horizontal distance.
+	 * @param y		Vertical distance.
+	 */
+	private void moveSelectedSprite(float x, float y)
+	{
+		testSprites[selectedSprite].translate(x, y);
 	}
 	
 	/**
