@@ -34,12 +34,12 @@ public class WorldRenderer implements Disposable
 	private void init()
 	{
 		batch = new SpriteBatch();
-		
-		//set up camera
+
+		// set up camera
 		camera = new OrthographicCamera(Constants.VIEWPORT_WIDTH, Constants.VIEWPORT_HEIGHT);
 		camera.position.set(0, 0, 0);
-		
-		//update camera with changes
+
+		// update camera with changes
 		camera.update();
 	}
 
@@ -56,26 +56,27 @@ public class WorldRenderer implements Disposable
 	 */
 	private void renderTestObjects()
 	{
-		//sets batch to use the object information from camera for rendering
+		// sets batch to use the object information from camera for rendering
 		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		//renders
-		for(Sprite sprite : worldController.testSprites)
+		// renders
+		for (Sprite sprite : worldController.testSprites)
 		{
 			sprite.draw(batch);
 		}
-		
+
 		batch.end();
 	}
 
 	/**
 	 * When called resizes the camera to the called height and width
-	 * @param width Desired Height
+	 * 
+	 * @param width  Desired Height
 	 * @param height Desired Width
 	 */
 	public void resize(int width, int height)
 	{
-		camera.viewportWidth = (Constants.VIEWPORT_HEIGHT/ height) * width;
+		camera.viewportWidth = (Constants.VIEWPORT_HEIGHT / height) * width;
 		camera.update();
 	}
 
