@@ -150,7 +150,7 @@ public class WorldController extends InputAdapter
 	}
 	
 	/**
-	 * Tests out movement of sprites.
+	 * Tests out movement of sprites and camera.
 	 * @param deltaTime		How much time since last frame.
 	 */
 	private void handleDebugInput(float deltaTime)
@@ -168,6 +168,46 @@ public class WorldController extends InputAdapter
 			moveSelectedSprite(0, sprMoveSpeed);
 		if (Gdx.input.isKeyPressed(Keys.S))
 			moveSelectedSprite(0, sprMoveSpeed);
+		
+		// Camera Controls (move)
+		float camMoveSpeed = 5 * deltaTime;
+		float camMoveSpeedAccelerationFactor = 5;
+		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
+			camMoveSpeed *= camMoveSpeedAccelerationFactor;
+		if (Gdx.input.isKeyPressed(Keys.LEFT))
+			moveCamera(-camMoveSpeed, 0);
+		if (Gdx.input.isKeyPressed(Keys.RIGHT))
+			moveCamera(camMoveSpeed, 0);
+		if (Gdx.input.isKeyPressed(Keys.UP))
+			moveCamera(0, camMoveSpeed);
+		if (Gdx.input.isKeyPressed(Keys.DOWN))
+			moveCamera(0, -camMoveSpeed);
+		if (Gdx.input.isKeyPressed(Keys.BACKSPACE))
+			cameraHelper.setPosition(0, 0);
+		
+		// Camera Controls (zoom)
+		float camZoomSpeed = 1 * deltaTime;
+		float camZoomSpeedAccelerationFactor = 5;
+		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
+			camZoomSpeed *= camZoomSpeedAccelerationFactor;
+		if (Gdx.input.isKeyPressed(Keys.COMMA))
+			cameraHelper.addzoom(camZoomSpeed);
+		if (Gdx.input.isKeyPressed(Keys.PERIOD))
+			cameraHelper.addzoom(-camZoomSpeed);
+		if (Gdx.input.isKeyPressed(Keys.SLASH))
+			cameraHelper.setZoom(1);
+	}
+	
+	/**
+	 * Moves the Camera in a given direction
+	 * @param x		Horizontal distance.
+	 * @param y		Vertical distance.
+	 */
+	private void moveCamera(float x, float y)
+	{
+		x += cameraHelper.getPosition().x;
+		y += cameraHelper.getPosition().y;
+		cameraHelper.setPosition(x, y);
 	}
 	
 	/**
