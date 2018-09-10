@@ -9,6 +9,9 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Disposable;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
 
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureFilter;
+
 /**
  * @author Kevin Rutter
  * Handles texture loading using a texture atlas.
@@ -60,6 +63,34 @@ public class Assets implements Disposable, AssetErrorListener
 	public void error(AssetDescriptor asset, Throwable throwable)
 	{
 		Gdx.app.error(TAG, "Couldn't load asset '" + asset.fileName + "'", (Exception)throwable);		
+	}
+	
+	/**
+	 * @author Kevin Rutter
+	 * Initializes and holds the game's decorative textures.
+	 */
+	public class AssetLevelDecoration
+	{
+		public final AtlasRegion cloud01;
+		public final AtlasRegion cloud02;
+		public final AtlasRegion cloud03;
+		public final AtlasRegion mountainLeft;
+		public final AtlasRegion mountainRight;
+		public final AtlasRegion waterOverlay;
+		
+		/**
+		 * Initialize atlas regions.
+		 * @param atlas		The texture atlas being used.
+		 */
+		public AssetLevelDecoration(TextureAtlas atlas)
+		{
+			cloud01 = atlas.findRegion("cloud01");
+			cloud02 = atlas.findRegion("cloud02");
+			cloud03 = atlas.findRegion("cloud03");
+			mountainLeft = atlas.findRegion("mountain_left");
+			mountainRight = atlas.findRegion("mountain_right");
+			waterOverlay = atlas.findRegion("water_overlay");
+		}
 	}
 	
 }
