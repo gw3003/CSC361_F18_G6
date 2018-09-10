@@ -4,14 +4,14 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetErrorListener;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Disposable;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
 
 /**
- * 
  * @author Kevin Rutter
- *
+ * Handles texture loading using a texture atlas.
  */
 public class Assets implements Disposable, AssetErrorListener
 {
@@ -26,6 +26,10 @@ public class Assets implements Disposable, AssetErrorListener
 	{
 	}
 	
+	/**
+	 * Load up the texture atlas.
+	 * @param assetManager	The asset manager this class will use.
+	 */
 	public void init(AssetManager assetManager)
 	{
 		this.assetManager = assetManager;
@@ -40,12 +44,18 @@ public class Assets implements Disposable, AssetErrorListener
 			Gdx.app.debug(TAG, "asset: " + a);
 	}
 	
+	/**
+	 * Tell the asset manager to to unload assets.
+	 */
 	@Override
 	public void dispose()
 	{
 		assetManager.dispose();
 	}
 	
+	/**
+	 * Called when the asset manager has an error with an asset, prints out an error log.
+	 */
 	@Override
 	public void error(AssetDescriptor asset, Throwable throwable)
 	{
