@@ -16,7 +16,7 @@ public class DesktopLauncher {
 			settings.maxHeight = 1024;
 			settings.duplicatePadding = false;
 			settings.debug = drawDebugOutline;
-			TexturePacker.process(settings, "assets-raw/images", "../CSC361_F18_G6-core/assets/images","canyonbunny.pack");
+			TexturePacker.process(settings, "assets-raw/images", "../core/assets/images","canyonbunny.pack");
 		}
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		new LwjglApplication(new CanyonBunnyMain(), config);
