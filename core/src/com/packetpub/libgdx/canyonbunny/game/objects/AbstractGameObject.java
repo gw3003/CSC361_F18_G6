@@ -36,7 +36,7 @@ public abstract class AbstractGameObject {
 	}
 	
 	/**
-	 * Gets the appearance of the game object
+	 * Gets the appearance of the game object and puts it on the level
 	 * @param batch is the sprite batch it uses
 	 */
 	public abstract void render (SpriteBatch batch);
