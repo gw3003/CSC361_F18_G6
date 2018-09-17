@@ -112,7 +112,7 @@ public class WorldRenderer implements Disposable
 	 */
 	private void renderGuiExtraLive(SpriteBatch batch)
 	{
-		float x = cameraGUI.viewportWidth - 50 - Constants.LIVES_START;
+		float x = cameraGUI.viewportWidth - 50 - Constants.LIVES_START * 50;
 		float y = -15;
 		for(int i = 0; i < Constants.LIVES_START; i++)
 		{
