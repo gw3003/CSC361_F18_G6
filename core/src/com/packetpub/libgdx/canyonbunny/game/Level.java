@@ -24,10 +24,10 @@ public class Level
 	public enum BLOCK_TYPE
 	{
 		EMPTY(0, 0, 0), // black
-		ROCK(0, 255, 0), // green
+		ROCK(181, 230, 29), // green
 		PLAYER_SPAWNPOINT(255, 255, 255), // white
-		ITEM_FEATHER(255, 0, 255), // purple
-		ITEM_GOLD_COIN(255, 255, 0); // yellow
+		ITEM_FEATHER(255, 174, 201), // purple
+		ITEM_GOLD_COIN(255, 242, 0); // yellow
 
 		private int color;
 
