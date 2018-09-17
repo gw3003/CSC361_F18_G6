@@ -6,9 +6,16 @@ import com.packetpub.libgdx.canyonbunny.CanyonBunnyMain;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker;
 import com.badlogic.gdx.tools.texturepacker.TexturePacker.Settings;
 
+/**
+ * This code will run the game and build a texture atlas if one is not built
+ * @Author Tyler Forrester
+ */
 public class DesktopLauncher {
 	private static boolean rebuildAtlas = false;
 	private static boolean drawDebugOutline = true;
+	/**
+	 * Main class to run the game
+	 */
 	public static void main (String[] arg) {
 		if (rebuildAtlas) {
 			Settings settings = new Settings();

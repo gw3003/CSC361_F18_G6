@@ -8,7 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas.AtlasRegion;
 import com.badlogic.gdx.utils.Disposable;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
-
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 
@@ -22,6 +22,7 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	private AssetManager assetManager;
 
+	public AssetFonts fonts;
 	public AssetBunny bunny;
 	public AssetRock rock;
 	public AssetGoldCoin goldCoin;
@@ -30,6 +31,39 @@ public class Assets implements Disposable, AssetErrorListener {
 
 	// singleton: prevent instantiation from other classes
 	private Assets() {
+	}
+	/**
+	 * Fonts for the game
+	 * @author Tyler
+	 *
+	 */
+	
+	public class AssetFonts {
+		public final BitmapFont defaultSmall;
+		public final BitmapFont defaultNormal;
+		public final BitmapFont defaultBig;
+		
+		public AssetFonts () {
+			//Create three fonts using Libgdx' 15px bitmap font
+			defaultSmall = new BitmapFont(
+					Gdx.files.internal("images/arial-15.fnt"),true);
+			defaultNormal = new BitmapFont(
+					Gdx.files.internal("images/arial-15.fnt"),true);
+			defaultBig = new BitmapFont(
+					Gdx.files.internal("images/arial-15.fnt"),true);
+			//set font sizes
+			defaultSmall.getData().setScale(0.75f);
+			defaultNormal.getData().setScale(1.0f);
+			defaultBig.getData().setScale(2.0f);
+			//enable linear texture filtering for smooth fonts
+			defaultSmall.getRegion().getTexture().setFilter(
+					TextureFilter.Linear, TextureFilter.Linear);
+			defaultNormal.getRegion().getTexture().setFilter(
+					TextureFilter.Linear,TextureFilter.Linear);
+			defaultBig.getRegion().getTexture().setFilter(
+					TextureFilter.Linear, TextureFilter.Linear);
+			
+		}
 	}
 
 	/**
@@ -57,7 +91,8 @@ public class Assets implements Disposable, AssetErrorListener {
 			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		}
 
-		// create game resource objects
+		// create game resource objects\
+		fonts = new AssetFonts();
 		bunny = new AssetBunny(atlas);
 		rock = new AssetRock(atlas);
 		goldCoin = new AssetGoldCoin(atlas);
@@ -71,6 +106,9 @@ public class Assets implements Disposable, AssetErrorListener {
 	@Override
 	public void dispose() {
 		assetManager.dispose();
+		fonts.defaultSmall.dispose();
+		fonts.defaultNormal.dispose();
+		fonts.defaultBig.dispose();
 	}
 
 	/**
@@ -176,7 +214,9 @@ public class Assets implements Disposable, AssetErrorListener {
 		 */
 		public AssetFeather(TextureAtlas atlas) {
 			feather = atlas.findRegion("item_feather");
+			
 		}
+
 	}
 
 }
