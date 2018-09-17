@@ -18,7 +18,7 @@ public class CameraHelper
 
 	private Vector2 position;
 	private float zoom;
-	private Sprite target;
+	private AbstractGameObject target;
 
 	/**
 	 * Constructor for the class, initializes positon and zoom
@@ -119,7 +119,7 @@ public class CameraHelper
 	 * 
 	 * @return not null
 	 */
-	public boolean hasTarget(AbstractGameObject target)
+	public boolean hasTarget()
 	{
 		return target != null;
 	}
