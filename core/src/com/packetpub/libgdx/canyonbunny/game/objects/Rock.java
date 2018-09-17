@@ -74,7 +74,7 @@ public class Rock extends AbstractGameObject
 		reg = regEdge;
 		relX -= dimension.x / 4;
 		batch.draw(reg.getTexture(), position.x + relX, position.y + relY,
-				origin.x, origin.y, dimension.x / 4, dimension.y,
+				origin.x, origin.y, dimension.x / 4 + 0.1f, dimension.y,
 				scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
 				reg.getRegionWidth(), reg.getRegionHeight(), false, false);
 		
@@ -84,7 +84,7 @@ public class Rock extends AbstractGameObject
 		for (int i = 0; i < length; i++)
 		{
 			batch.draw(reg.getTexture(), position.x + relX, position.y + relY,
-					origin.x, origin.y, dimension.x, dimension.y,
+					origin.x, origin.y, dimension.x + 0.1f, dimension.y,
 					scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(),
 					reg.getRegionWidth(), reg.getRegionHeight(), false, false);
 			relX += dimension.x;
