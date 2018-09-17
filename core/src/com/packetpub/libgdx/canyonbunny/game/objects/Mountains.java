@@ -1,7 +1,5 @@
 package com.packetpub.libgdx.canyonbunny.game.objects;
 
-import javax.lang.model.util.Elements.Origin;
-
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.MathUtils;
