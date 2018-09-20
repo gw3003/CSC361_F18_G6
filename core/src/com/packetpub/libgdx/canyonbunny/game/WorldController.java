@@ -172,6 +172,7 @@ public class WorldController extends InputAdapter
 	{
 		score = 0;
 		level = new Level(Constants.LEVEL_01);
+		cameraHelper.setTarget(level.bunnyHead);
 	}
 	
 	/**
@@ -234,21 +235,24 @@ public class WorldController extends InputAdapter
 		if (Gdx.app.getType() != ApplicationType.Desktop)
 			return;
 		
-		// Camera Controls (move)
-		float camMoveSpeed = 5 * deltaTime;
-		float camMoveSpeedAccelerationFactor = 5;
-		if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
-			camMoveSpeed *= camMoveSpeedAccelerationFactor;
-		if (Gdx.input.isKeyPressed(Keys.LEFT))
-			moveCamera(-camMoveSpeed, 0);
-		if (Gdx.input.isKeyPressed(Keys.RIGHT))
-			moveCamera(camMoveSpeed, 0);
-		if (Gdx.input.isKeyPressed(Keys.UP))
-			moveCamera(0, camMoveSpeed);
-		if (Gdx.input.isKeyPressed(Keys.DOWN))
-			moveCamera(0, -camMoveSpeed);
-		if (Gdx.input.isKeyPressed(Keys.BACKSPACE))
-			cameraHelper.setPosition(0, 0);
+		if (!cameraHelper.hasTarget(level.bunnyHead))
+		{
+			// Camera Controls (move)
+			float camMoveSpeed = 5 * deltaTime;
+			float camMoveSpeedAccelerationFactor = 5;
+			if (Gdx.input.isKeyPressed(Keys.SHIFT_LEFT))
+				camMoveSpeed *= camMoveSpeedAccelerationFactor;
+			if (Gdx.input.isKeyPressed(Keys.LEFT))
+				moveCamera(-camMoveSpeed, 0);
+			if (Gdx.input.isKeyPressed(Keys.RIGHT))
+				moveCamera(camMoveSpeed, 0);
+			if (Gdx.input.isKeyPressed(Keys.UP))
+				moveCamera(0, camMoveSpeed);
+			if (Gdx.input.isKeyPressed(Keys.DOWN))
+				moveCamera(0, -camMoveSpeed);
+			if (Gdx.input.isKeyPressed(Keys.BACKSPACE))
+				cameraHelper.setPosition(0, 0);
+		}
 		
 		// Camera Controls (zoom)
 		float camZoomSpeed = 1 * deltaTime;
