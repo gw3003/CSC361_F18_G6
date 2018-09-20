@@ -49,7 +49,37 @@ public class WorldController extends InputAdapter
 	 */
 	private void onCollisionBunnyHeadWithRock(Rock rock)
 	{
+		BunnyHead bunnyHead = level.bunnyHead;
+		float heightDifference = Math.abs(bunnyHead.position.y -
+				(rock.position.y + rock.bounds.height));
+		if (heightDifference > 0.25f)
+		{
+			boolean hitRightEdge = bunnyHead.position.x >
+				(rock.position.x + rock.bounds.width / 2.0f);
+			if (hitRightEdge)
+			{
+				bunnyHead.position.x = rock.position.x + rock.bounds.width;
+			}
+			else
+			{
+				bunnyHead.position.x = rock.position.x - bunnyHead.bounds.width;
+			}
+			return;
+		}
 		
+		switch (bunnyHead.jumpState)
+		{
+			case GROUNDED:
+				break;
+			case FALLING:
+			case JUMP_FALLING:
+				bunnyHead.position.y = rock.position.y + bunnyHead.bounds.height + bunnyHead.origin.y;
+				bunnyHead.jumpState = JUMP_STATE.GROUNDED;
+				break;
+			case JUMP_RISING:
+				bunnyHead.position.y = rock.position.y + bunnyHead.bounds.height + bunnyHead.origin.y;
+				break;
+		}
 	}
 	
 	/**
