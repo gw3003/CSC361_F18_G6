@@ -37,6 +37,7 @@ public class WorldController extends InputAdapter
 	public Level level;
 	public int lives;
 	public int score;
+	private float timeLeftGameOverDelay;
 	
 	// Rectangles for collision detection
 	private Rectangle r1 = new Rectangle();
@@ -165,6 +166,7 @@ public class WorldController extends InputAdapter
 		Gdx.input.setInputProcessor(this);
 		cameraHelper = new CameraHelper();
 		lives = Constants.LIVES_START;
+		timeLeftGameOverDelay = 0;
 		initLevel();
 	}
 	
@@ -266,10 +268,27 @@ public class WorldController extends InputAdapter
 	public void update(float deltaTime)
 	{
 		handleDebugInput(deltaTime);
-		handleInputGame(deltaTime);
+		if (isGameOver())
+		{
+			timeLeftGameOverDelay -= deltaTime;
+			if (timeLeftGameOverDelay < 0)
+				init();
+		}
+		else
+		{
+			handleInputGame(deltaTime);
+		}
 		level.update(deltaTime);
 		testCollisions();
 		cameraHelper.update(deltaTime);
+		if (!isGameOver() && isPlayerInWater())
+		{
+			lives--;
+			if (isGameOver())
+				timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_OVER;
+			else
+				initLevel();
+		}
 	}
 	
 	/**
@@ -323,5 +342,23 @@ public class WorldController extends InputAdapter
 		x += cameraHelper.getPosition().x;
 		y += cameraHelper.getPosition().y;
 		cameraHelper.setPosition(x, y);
+	}
+	
+	/**
+	 * Check if the player is out of lives, and the game is over.
+	 * @return		True if player is out of lives, false if not.
+	 */
+	public boolean isGameOver()
+	{
+		return lives < 0;
+	}
+	
+	/**
+	 * Check if the bunnyhead is in the water.
+	 * @return		True if in water, false if not.
+	 */
+	public boolean isPlayerInWater()
+	{
+		return level.bunnyHead.position.y < -5;
 	}
 }
