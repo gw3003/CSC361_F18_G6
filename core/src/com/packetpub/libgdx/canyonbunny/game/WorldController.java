@@ -189,7 +189,52 @@ public class WorldController extends InputAdapter
 			init();
 			Gdx.app.debug(TAG, "Game world resetted");
 		}
+		
+		// Toggle camera follow
+		else if (keycode == Keys.ENTER)
+		{
+			cameraHelper.setTarget(cameraHelper.hasTarget() ? null: level.bunnyHead);
+			Gdx.app.debug(TAG, "Camera follow enabled: " + cameraHelper.hasTarget());
+		}
 		return false;
+	}
+	
+	/**
+	 * Handles movement and jumping of the bunnyhead.
+	 * @param deltaTime		How much time has passed since last frame.
+	 */
+	private void handleInputGame(float deltaTime)
+	{
+		if (cameraHelper.hasTarget(level.bunnyHead))
+		{
+			// Player Movement
+			if (Gdx.input.isKeyPressed(Keys.LEFT))
+			{
+				level.bunnyHead.velocity.x = -level.bunnyHead.terminalVelocity.x;
+			}
+			else if (Gdx.input.isKeyPressed(Keys.RIGHT))
+			{
+				level.bunnyHead.velocity.x = level.bunnyHead.terminalVelocity.x
+			}
+			else
+			{
+				//Execute auto-forward movement on non-desktop platform
+				if (Gdx.app.getType() != ApplicationType.Desktop)
+				{
+					level.bunnyHead.velocity.x = level.bunnyHead.terminalVelocity.x;
+				}
+			}
+			
+			// Bunny Jump
+			if (Gdx.input.isTouched() || Gdx.input.isKeyPressed(Keys.SPACE))
+			{
+				level.bunnyHead.setJumping(true);
+			}
+			else
+			{
+				level.bunnyHead.setJumping(false);
+			}
+		}
 	}
 	
 	/**
