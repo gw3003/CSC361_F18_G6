@@ -89,7 +89,9 @@ public class WorldController extends InputAdapter
 	 */
 	private void onCollisionBunnyWithGoldCoin(GoldCoin goldcoin)
 	{
-		
+		goldcoin.collected = true;
+		score += goldcoin.getScore();
+		Gdx.app.log(TAG,  "Gold coin collected");
 	}
 	
 	/**
@@ -99,7 +101,10 @@ public class WorldController extends InputAdapter
 	 */
 	private void onCollisionBunnyWithFeather(Feather feather)
 	{
-		
+		feather.collected = true;
+		score += feather.getScore();
+		level.bunnyHead.setFeatherPowerup(true);
+		Gdx.app.log(TAG, "Feather collected");
 	}
 	
 	/**
@@ -216,6 +221,7 @@ public class WorldController extends InputAdapter
 	{
 		handleDebugInput(deltaTime);
 		level.update(deltaTime);
+		testCollisions();
 		cameraHelper.update(deltaTime);
 	}
 	
