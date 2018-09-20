@@ -38,6 +38,81 @@ public class WorldController extends InputAdapter
 	public int lives;
 	public int score;
 	
+	// Rectangles for collision detection
+	private Rectangle r1 = new Rectangle();
+	private Rectangle r2 = new Rectangle();
+	
+	/**
+	 * Call this when the bunny collides with a rock.
+	 * Stops the bunny from moving down once it hits the rock.
+	 * @param rock		The rock the bunny hits.
+	 */
+	private void onCollisionBunnyHeadWithRock(Rock rock)
+	{
+		
+	}
+	
+	/**
+	 * Call this when the bunny collides with a gold coin.
+	 * Increases the score, and removes the gold coin from the level.
+	 * @param goldcoin	The coin the bunny hits.
+	 */
+	private void onCollisionBunnyWithGoldCoin(GoldCoin goldcoin)
+	{
+		
+	}
+	
+	/**
+	 * Call this when the bunny collides with a feather.
+	 * Gives the bunny a jump power up.
+	 * @param feather	The feather the bunny hits.
+	 */
+	private void onCollisionBunnyWithFeather(Feather feather)
+	{
+		
+	}
+	
+	/**
+	 * Checks if the bunny head collided with anything.
+	 */
+	private void testCollisions()
+	{
+		r1.set(level.bunnyHead.position.x, level.bunnyHead.position.y,
+				level.bunnyHead.bounds.width, level.bunnyHead.bounds.height);
+		
+		// Test collision: Bunny Head <-> Rocks
+		for (Rock rock : level.rocks)
+		{
+			r2.set(rock.position.x, rock.position.y, rock.bounds.width, rock.bounds.height);
+			if (!r1.overlaps(r2)) continue;
+			onCollisionBunnyHeadWithRock(rock);
+			// IMPORTANT: must do all collisions for valid
+			// edge testing on rocks.
+		}
+		
+		// Test collision: Bunny Head <-> Gold Coins
+		for (GoldCoin goldcoin : level.goldcoins)
+		{
+			if (goldcoin.collected) continue;
+			r2.set(goldcoin.position.x, goldcoin.position.y,
+					goldcoin.bounds.width, goldcoin.bounds.height);
+			if (!r1.overlaps(r2)) continue;
+			onCollisionBunnyWithGoldCoin(goldcoin);
+			break;
+		}
+		
+		// Test collision: Bunny Head <-> Feathers
+		for (Feather feather : level.feathers)
+		{
+			if (feather.collected) continue;
+			r2.set(feather.position.x, feather.position.y,
+					feather.bounds.width, feather.bounds.height);
+			if (!r1.overlaps(r2)) continue;
+			onCollisionBunnyWithFeather(feather);
+			break;
+		}
+	}
+	
 	/**
 	 * Constructor for WorldController.
 	 */
