@@ -15,6 +15,12 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Array;
 import com.packetpub.libgdx.canyonbunny.game.objects.Rock;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
+import com.badlogic.gdx.math.Rectangle;
+import com.packetpub.libgdx.canyonbunny.game.objects.BunnyHead;
+import com.packetpub.libgdx.canyonbunny.game.objects.BunnyHead.JUMP_STATE;
+import com.packetpub.libgdx.canyonbunny.game.objects.Feather;
+import com.packetpub.libgdx.canyonbunny.game.objects.GoldCoin;
+import com.packetpub.libgdx.canyonbunny.game.objects.Rock;
 
 /**
  * @author Kevin Rutter
@@ -104,6 +110,7 @@ public class WorldController extends InputAdapter
 	public void update(float deltaTime)
 	{
 		handleDebugInput(deltaTime);
+		level.update(deltaTime);
 		cameraHelper.update(deltaTime);
 	}
 	
