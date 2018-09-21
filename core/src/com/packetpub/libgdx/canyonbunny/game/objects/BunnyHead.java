@@ -30,7 +30,7 @@ public class BunnyHead extends AbstractGameObject{
 	public float timeJumping;
 	public JUMP_STATE jumpState;
 	public boolean hasFeatherPowerup;
-	public float timeLEftFeatherPowerup;
+	public float timeLeftFeatherPowerup;
 	
 	public BunnyHead () {
 		init();
@@ -60,7 +60,7 @@ public class BunnyHead extends AbstractGameObject{
 		timeJumping = 0;
 		//Power-ups
 		hasFeatherPowerup = false;
-		timeLeaftFeatherPowerup = 0;
+		timeLeftFeatherPowerup = 0;
 	}
 	
 	/**
@@ -118,7 +118,7 @@ public class BunnyHead extends AbstractGameObject{
 		super.update(deltaTime);
 		if (velocity.x != 0) {
 			viewDirection = velocity.x < 0 ? VIEW_DIRECTION.LEFT : 
-	VIEW_DIRECTION_RIGHT;
+	VIEW_DIRECTION.RIGHT;
 		}
 		if (timeLeftFeatherPowerup > 0) {
 			timeLeftFeatherPowerup -= deltaTime;
@@ -137,7 +137,7 @@ public class BunnyHead extends AbstractGameObject{
 	protected void updateMotionY (float deltaTime) {
 		switch (jumpState) {
 		case GROUNDED:
-			jumpState = JUMP_STATE_FALLING;
+			jumpState = JUMP_STATE.FALLING;
 			break;
 		case JUMP_RISING:
 			//Keep track of jump time
@@ -160,12 +160,12 @@ public class BunnyHead extends AbstractGameObject{
 		TextureRegion reg = null;
 		
 		//Set special color when game object has a feather power-up
-		if (has Feather Powerup) {
-			batch.setColor(1.0f, 0.8f,1.0f);
+		if (hasFeatherPowerup) {
+			batch.setColor(1.0f, 0.8f,0.0f,1.0f);
 		}
 		//Draw image
 		reg = regHead;
-		batch.draw(reg.getTexture(),position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation,reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(), reg.getRegionHeight(), viewDirection == VIEW_DIRECTION.LEFT, false);batch
+		batch.draw(reg.getTexture(),position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation,reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(), reg.getRegionHeight(), viewDirection == VIEW_DIRECTION.LEFT, false);
 		
 		//Reset color to white
 		batch.setColor(1,1,1,1);
