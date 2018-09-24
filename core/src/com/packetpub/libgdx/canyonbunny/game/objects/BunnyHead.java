@@ -40,9 +40,7 @@ public class BunnyHead extends AbstractGameObject{
 	 *	Initialized the Object BunnyHead in the world, setting it's origin, friction, accelration, etc.
 	 */
 	public void init() {
-		public void setJumping (boolean jumpKeyPressed) {};
-		public void setFeatherPowerup(boolean pickedUp) {};
-		public boolean hasFeatherPowerup() {};
+		
 		dimension.set(1,1);
 		regHead = Assets.instance.bunny.head;
 		//Center image on game object
@@ -63,7 +61,7 @@ public class BunnyHead extends AbstractGameObject{
 		timeLeftFeatherPowerup = 0;
 	}
 	
-	/**
+		/**
 	 * Hadnles the bunny's jumping
 	 * @param JumpKeyPressed If the key is pressed
 	 */
