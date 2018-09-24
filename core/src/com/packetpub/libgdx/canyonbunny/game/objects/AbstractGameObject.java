@@ -1,6 +1,7 @@
 package com.packetpub.libgdx.canyonbunny.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 
 /**
@@ -15,6 +16,12 @@ public abstract class AbstractGameObject {
 	public Vector2 origin;
 	public Vector2 scale;
 	public float rotation;
+	public Vector2 velocity;
+	public Vector2 terminalVelocity;
+	public Vector2 friction;
+	
+	public Vector2 acceleration;
+	public Rectangle bounds;
 	
 	/**
 	 * Builds the game object
@@ -25,6 +32,11 @@ public abstract class AbstractGameObject {
 		origin = new Vector2();
 		scale = new Vector2(1,1);
 		rotation = 0;
+		velocity = new Vector2();
+		terminalVelocity = new Vector2(1,1);
+		friction = new Vector2();
+		acceleration = new Vector2();
+		bounds = new Rectangle();
 	}
 	
 	/**
@@ -32,7 +44,11 @@ public abstract class AbstractGameObject {
 	 * @param deltaTime
 	 */
 	public void update (float deltaTime) {
-		
+		updateMotionX(deltaTime);
+		updateMotionY(deltaTime);
+		//Move to new position
+		position.x += velocity.x * deltaTime;
+		position.y += velocity.y * deltaTime;
 	}
 	
 	/**

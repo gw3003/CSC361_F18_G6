@@ -41,6 +41,9 @@ public class CameraHelper
 
 		position.x = target.position.x + target.origin.x;
 		position.y = target.position.y + target.origin.y;
+		
+		//Prevent cmaera from moving down too far
+		position.y = Math.max(-1f, position.y);
 	}
 
 	/**
