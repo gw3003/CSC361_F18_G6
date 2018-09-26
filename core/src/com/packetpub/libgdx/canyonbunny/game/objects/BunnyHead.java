@@ -11,7 +11,8 @@ import com.packetpub.libgdx.canyonbunny.util.Constants;
  * @author tf0199
  *
  */
-public class BunnyHead extends AbstractGameObject{
+public class BunnyHead extends AbstractGameObject
+{
 	public static final String TAG = BunnyHead.class.getName();
 	
 	private final float JUMP_TIME_MAX = 0.3f;
@@ -20,7 +21,8 @@ public class BunnyHead extends AbstractGameObject{
 	
 	public enum VIEW_DIRECTION {LEFT, RIGHT}
 	
-	public enum JUMP_STATE {
+	public enum JUMP_STATE 
+	{
 		GROUNDED, FALLING, JUMP_RISING, JUMP_FALLING
 	}
 	
@@ -32,14 +34,16 @@ public class BunnyHead extends AbstractGameObject{
 	public boolean hasFeatherPowerup;
 	public float timeLeftFeatherPowerup;
 	
-	public BunnyHead () {
+	public BunnyHead ()
+	{
 		init();
 	}
 	
 	/**
 	 *	Initialized the Object BunnyHead in the world, setting it's origin, friction, accelration, etc.
 	 */
-	public void init() {
+	public void init() 
+	{
 		dimension.set(1,1);
 		regHead = Assets.instance.bunny.head;
 		//Center image on game object
@@ -64,7 +68,8 @@ public class BunnyHead extends AbstractGameObject{
 	 * Hadnles the bunny's jumping
 	 * @param JumpKeyPressed If the key is pressed
 	 */
-	public void setJumping (boolean jumpKeyPressed) {
+	public void setJumping (boolean jumpKeyPressed) 
+	{
 		switch (jumpState) {
 			case GROUNDED: //Character is standing on a platform
 				if (jumpKeyPressed) {
@@ -91,7 +96,8 @@ public class BunnyHead extends AbstractGameObject{
 	 * Sets the bunny to have the feather pickup power
 	 * @param pickedUp if the bunny picked up the feather
 	 */
-	public void setFeatherPowerup (boolean pickedUp) {
+	public void setFeatherPowerup (boolean pickedUp) 
+	{
 		hasFeatherPowerup = pickedUp;
 		if (pickedUp) {
 			timeLeftFeatherPowerup =
@@ -111,7 +117,8 @@ public class BunnyHead extends AbstractGameObject{
 	 * Updates the object, when called upon 60 times every secound
 	 */
 	@Override
-	public void update (float deltaTime) {
+	public void update (float deltaTime) 
+	{
 		super.update(deltaTime);
 		if (velocity.x != 0) {
 			viewDirection = velocity.x < 0 ? VIEW_DIRECTION.LEFT : 
@@ -131,7 +138,8 @@ public class BunnyHead extends AbstractGameObject{
 	 * @param deltaTime time in the game currently
 	 */
 	@Override
-	protected void updateMotionY (float deltaTime) {
+	protected void updateMotionY (float deltaTime) 
+	{
 		switch (jumpState) {
 		case GROUNDED:
 			jumpState = JUMP_STATE.FALLING;
@@ -153,11 +161,13 @@ public class BunnyHead extends AbstractGameObject{
 	 * Renders the object in the world using the sprite batch
 	 */
 	@Override
-	public void render(SpriteBatch batch) {
+	public void render(SpriteBatch batch) 
+	{
 		TextureRegion reg = null;
 		
 		//Set special color when game object has a feather power-up
-		if (hasFeatherPowerup) {
+		if (hasFeatherPowerup) 
+		{
 			batch.setColor(1.0f, 0.8f,0.0f,1.0f);
 		}
 		//Draw image
