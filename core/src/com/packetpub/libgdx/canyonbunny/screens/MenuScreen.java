@@ -20,6 +20,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.packetpub.libgdx.canyonbunny.game.Assets;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
 
@@ -97,6 +98,36 @@ public class MenuScreen extends AbstractGameScreen
 		stage.addActor(layerOptionsWindow);
 	}
 	
+	private Table buildBackgroundLayer()
+	{
+		Table layer = new Table();
+		return layer;
+	}
+	
+	private Table buildObjectsLayer()
+	{
+		Table layer = new Table();
+		return layer;
+	}
+	
+	private Table buildLogosLayer()
+	{
+		Table layer = new Table();
+		return layer;
+	}
+	
+	private Table buildControlsLayer()
+	{
+		Table layer = new Table();
+		return layer;
+	}
+	
+	private Table buildOptionsWindowLayer()
+	{
+		Table layer = new Table();
+		return layer;
+	}
+	
 	/**
 	 * Renders the current frame of the screen.
 	 * Changes screen to the gamescreen when touched/clicked.
@@ -111,23 +142,40 @@ public class MenuScreen extends AbstractGameScreen
 			game.setScreen(new GameScreen(game));
 	}
 	
+	/**
+	 * Changes the dimensions of the screen.
+	 * @param width		New width of the screen.
+	 * @param height	New height of the screen.
+	 */
 	@Override public void resize(int width, int height)
 	{
-		
+		stage.getViewport().update(width, height, true);
 	}
 	
+	/**
+	 * Redraws the stage when it needs to be shown again.
+	 */
 	@Override public void show()
 	{
-		
+		stage = new Stage(new StretchViewport(Constants.VIEWPORT_GUI_WIDTH,
+				Constants.VIEWPORT_GUI_HEIGHT));
+		Gdx.input.setInputProcessor(stage);
+		rebuildStage();
 	}
 	
+	/**
+	 * Frees allocated resources when screen is hidden.
+	 */
 	@Override public void hide()
 	{
-		
+		stage.dispose();
+		skinCanyonBunny.dispose();
 	}
 	
+	/**
+	 * Menu screen does not need to be paused.
+	 */
 	@Override public void pause()
-	{
-		
+	{	
 	}
 }
