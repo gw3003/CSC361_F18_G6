@@ -133,7 +133,7 @@ public class CameraHelper
 	 * @param target desired
 	 * @return whether the sprite is the target
 	 */
-	public boolean hasTarget(Sprite target)
+	public boolean hasTarget(AbstractGameObject target)
 	{
 		return hasTarget() && this.target.equals(target);
 	}
