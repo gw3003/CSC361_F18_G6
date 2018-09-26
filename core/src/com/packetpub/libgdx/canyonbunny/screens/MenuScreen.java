@@ -71,6 +71,33 @@ public class MenuScreen extends AbstractGameScreen
 	}
 	
 	/**
+	 * Puts together all the layers of the menu screen.
+	 */
+	private void rebuildStage()
+	{
+		skinCanyonBunny = new Skin(Gdx.files.internal(Constants.SKIN_CANYONBUNNY_UI),
+				new TextureAtlas(Constants.TEXTURE_ATLAS_UI));
+		
+		// build all layers
+		Table layerBackground = buildBackgroundLayer();
+		Table layerObjects = buildObjectsLayer();
+		Table layerLogos = buildLogosLayer();
+		Table layerControls = buildControlsLayer();
+		Table layerOptionsWindow = buildOptionsWindowLayer();
+		
+		// assemble stage for menu screen
+		stage.clear();
+		Stack stack = new Stack();
+		stage.addActor(stack);
+		stack.setSize(Constants.VIEWPORT_GUI_WIDTH, Constants.VIEWPORT_GUI_HEIGHT);
+		stack.add(layerBackground);
+		stack.add(layerObjects);
+		stack.add(layerLogos);
+		stack.add(layerControls);
+		stage.addActor(layerOptionsWindow);
+	}
+	
+	/**
 	 * Renders the current frame of the screen.
 	 * Changes screen to the gamescreen when touched/clicked.
 	 * @param deltaTime		Amount of time since last frame was rendered.
