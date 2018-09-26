@@ -10,7 +10,8 @@ import com.badlogic.gdx.math.MathUtils;
  * @author Tyler Forrester
  *
  */
-public abstract class AbstractGameObject {
+public abstract class AbstractGameObject 
+{
 
 	public Vector2 position;
 	public Vector2 dimension;
@@ -27,7 +28,8 @@ public abstract class AbstractGameObject {
 	/**
 	 * Builds the game object
 	 */
-	public AbstractGameObject () {
+	public AbstractGameObject () 
+	{
 		position = new Vector2();
 		dimension = new Vector2(1,1);
 		origin = new Vector2();
@@ -43,7 +45,8 @@ public abstract class AbstractGameObject {
 	/**
 	 * Updates moveing along the X axis
 	 */
-	protected void updateMotionX (float deltaTime) {
+	protected void updateMotionX (float deltaTime) 
+	{
 		if (velocity.x != 0) {
 			//Apply friction
 			if (velocity.x > 0) {
@@ -64,7 +67,8 @@ public abstract class AbstractGameObject {
 	/**
 	 * Updates and handles movement on the Y axis
 	 */
-	protected void updateMotionY (float deltaTime) {
+	protected void updateMotionY (float deltaTime) 
+	{
 		if (velocity.y != 0){
 			//Apply friction
 			if (velocity.y > 0) {
@@ -84,7 +88,8 @@ public abstract class AbstractGameObject {
 	 * Updates the object based on the timer
 	 * @param deltaTime
 	 */
-	public void update (float deltaTime) {
+	public void update (float deltaTime) 
+	{
 		updateMotionX(deltaTime);
 		updateMotionY(deltaTime);
 		//Move to new position
