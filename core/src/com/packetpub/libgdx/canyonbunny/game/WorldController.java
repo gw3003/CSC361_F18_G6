@@ -216,7 +216,7 @@ public class WorldController extends InputAdapter
 			}
 			else if (Gdx.input.isKeyPressed(Keys.RIGHT))
 			{
-				level.bunnyHead.velocity.x = level.bunnyHead.terminalVelocity.x
+				level.bunnyHead.velocity.x = level.bunnyHead.terminalVelocity.x;
 			}
 			else
 			{

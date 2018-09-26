@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -182,7 +183,7 @@ public class WorldRenderer implements Disposable
 		{
 			BitmapFont fontGameOver = Assets.instance.fonts.defaultBig;
 			fontGameOver.setColor(1, 0.75f, 0.25f, 1);
-			fontGameOver.drawMultiLine(batch, "GAME OVER", x , y, 0, BitmapFont.HAlignment.CENTER);
+			fontGameOver.draw(batch, "GAME OVER", x , y, 1, Align.center, false);
 			fontGameOver.setColor(1, 1, 1, 1);
 		}
 	}
