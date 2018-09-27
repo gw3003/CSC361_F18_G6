@@ -233,6 +233,77 @@ public class MenuScreen extends AbstractGameScreen
 	}
 	
 	/**
+	 * Builds a table that contains debug settings.
+	 * @return		Debug options table.
+	 */
+	private Table buildOptWinDebug()
+	{
+		Table tbl = new Table();
+		// + Title: "Debug"
+		tbl.pad(10, 10, 0, 10);
+		tbl.add(new Label("Debug", skinLibgdx, "default-font",
+				Color.RED)).colspan(3);
+		tbl.row();
+		tbl.columnDefaults(0).padRight(10);
+		tbl.columnDefaults(1).padRight(10);
+		// + Checkbox, "Show FPS Counter" label
+		chkShowFpsCounter = new CheckBox("", skinLibgdx);
+		tbl.add(new Label("Show FPS Counter", skinLibgdx));
+		tbl.add(chkShowFpsCounter);
+		tbl.row();
+		return tbl;
+	}
+	
+	/**
+	 * Builds a table that contains the save and cancel buttons in options window.
+	 * @return		Save/cancel buttons table.
+	 */
+	private Table buildOptWinButtons()
+	{
+		Table tbl = new Table();
+		// + Separator
+		Label lbl = null;
+		lbl = new Label("", skinLibgdx);
+		lbl.setColor(0.75f, 0.75f, 0.75f, 1);
+		lbl.setStyle(new LabelStyle(lbl.getStyle()));
+		lbl.getStyle().background = skinLibgdx.newDrawable("white");
+		tbl.add(lbl).colspan(2).height(1).width(220).pad(0, 0, 0, 1);
+		tbl.row();
+		lbl = new Label("", skinLibgdx);
+		lbl.setColor(0.5f, 0.5f, 0.5f, 1);
+		lbl.setStyle(new LabelStyle(lbl.getStyle()));
+		lbl.getStyle().background = skinLibgdx.newDrawable("white");
+		tbl.add(lbl).colspan(2).height(1).width(220).pad(0, 1, 5, 0);
+		tbl.row();
+		
+		// + Save Button with event handler
+		btnWinOptSave = new TextButton("Save", skinLibgdx);
+		tbl.add(btnWinOptSave).padRight(30);
+		btnWinOptSave.addListener(new ChangeListener()
+		{
+			@Override
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				onSaveClicked();
+			}
+		});
+		
+		// + Cancel Button with event handler
+		btnWinOptCancel = new TextButton("Cancel", skinLibgdx);
+		tbl.add(btnWinOptCancel);
+		btnWinOptCancel.addListener(new ChangeListener()
+		{
+			@Override
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				onCancelClicked();
+			}
+		});
+		
+		return tbl;
+	}
+	
+	/**
 	 * Loads the previously set settings to the options menu.
 	 */
 	private void loadSettings()
