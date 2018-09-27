@@ -98,15 +98,34 @@ public class MenuScreen extends AbstractGameScreen
 		stage.addActor(layerOptionsWindow);
 	}
 	
+	/**
+	 * Creates the background layer of the menu screen.
+	 * @return		The background layer.
+	 */
 	private Table buildBackgroundLayer()
 	{
 		Table layer = new Table();
+		// + Background
+		imgBackground = new Image(skinCanyonBunny, "background");
+		layer.add(imgBackground);
 		return layer;
 	}
 	
+	/**
+	 * Creates a the objects layer of the menu, with coins and a bunny.
+	 * @return		The object layer.
+	 */
 	private Table buildObjectsLayer()
 	{
 		Table layer = new Table();
+		// + Coins
+		imgCoins = new Image(skinCanyonBunny, "coins");
+		layer.addActor(imgCoins);
+		imgCoins.setPosition(135, 80);
+		// + Bunny
+		imgBunny = new Image(skinCanyonBunny, "bunny");
+		layer.addActor(imgBunny);
+		imgBunny.setPosition(355, 40);
 		return layer;
 	}
 	
