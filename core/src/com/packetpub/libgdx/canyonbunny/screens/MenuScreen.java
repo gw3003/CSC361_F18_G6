@@ -177,7 +177,8 @@ public class MenuScreen extends AbstractGameScreen
 		Table tbl = new Table();
 		// + Title: "Audio"
 		tbl.pad(10, 10, 0, 10);
-		tbl.add(new Label("Audio", skinLibgdx, "default-font", Color.ORANGE)).colspan(3);
+		tbl.add(new Label("Audio", skinLibgdx, "default-font",
+				Color.ORANGE)).colspan(3);
 		tbl.row();
 		tbl.columnDefaults(0).padRight(10);
 		tbl.columnDefaults(1).padRight(10);
@@ -195,6 +196,39 @@ public class MenuScreen extends AbstractGameScreen
 		sldMusic = new Slider(0.0f, 1.0f, 0.1f, false, skinLibgdx);
 		tbl.add(sldMusic);
 		tbl.row();
+		return tbl;
+	}
+	
+	/**
+	 * Builds the skin selection table for the options window.
+	 * @return		The skin selection table.
+	 */
+	private Table buildOptWinSkinSelection()
+	{
+		Table tbl = new Table();
+		// + Title: "Character Skin"
+		tbl.pad(10, 10, 0, 10);
+		tbl.add(new Label("Character Skin", skinLibgdx, "default-font",
+				Color.ORANGE)).colspan(2);
+		tbl.row();
+		// + Drop down box filled with skin items
+		selCharSkin = new SelectBox<CharacterSkin>(skinLibgdx);
+		
+		selCharSkin.setItems(CharacterSkin.values());
+		
+		selCharSkin.addListener(new ChangeListener()
+		{
+			@Override
+			public void changed(ChangeEvent event, Actor actor)
+			{
+				onCharSkinSelected(((SelectBox<CharacterSkin>)
+						actor).getSelectedIndex());
+			}
+		});
+		tbl.add(selCharSkin).width(120).padRight(20);
+		// + Skin preview image
+		imgCharSkin = new Image(Assets.instance.bunny.head);
+		tbl.add(imgCharSkin).width(50).height(50);
 		return tbl;
 	}
 	
