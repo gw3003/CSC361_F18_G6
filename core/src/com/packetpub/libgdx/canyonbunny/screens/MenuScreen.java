@@ -23,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.packetpub.libgdx.canyonbunny.game.Assets;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
+import com.packetpub.libgdx.canyonbunny.util.CharacterSkin;
+import com.packetpub.libgdx.canyonbunny.util.GamePreferences;
 
 /**
  * This screen is for the main menu of the game.
@@ -35,6 +37,8 @@ public class MenuScreen extends AbstractGameScreen
 	
 	private Stage stage;
 	private Skin skinCanyonBunny;
+	
+	private Skin skinLibgdx;
 	
 	// menu
 	private Image imgBackground;
@@ -61,7 +65,7 @@ public class MenuScreen extends AbstractGameScreen
 	private final float DEBUG_REBUILD_INTERVAL = 5.0f;
 	private boolean debugEnabled = false;
 	private float debugRebuildStage;
-	
+		
 	/**
 	 * Constructor for the screen that holds the main menu of the game.
 	 * @param game	The applicationListener for the game. (CanyonBunnyMain)
@@ -159,6 +163,66 @@ public class MenuScreen extends AbstractGameScreen
 	{
 		Table layer = new Table();
 		return layer;
+	}
+	
+	/**
+	 * Loads the previously set settings to the options menu.
+	 */
+	private void loadSettings()
+	{
+		GamePreferences prefs = GamePreferences.instance;
+		prefs.load();
+		chkSound.setChecked(prefs.sound);
+		sldSound.setValue(prefs.volSound);
+		chkMusic.setChecked(prefs.music);
+		sldMusic.setValue(prefs.volMusic);
+		selCharSkin.setSelectedIndex(prefs.charSkin);
+		onCharSkinSelected(prefs.charSkin);
+		chkShowFpsCounter.setChecked(prefs.showFpsCounter);
+	}
+	
+	/**
+	 * Updates the preview image for the character skin.
+	 * @param index		The selected character skin.
+	 */
+	private void onCharSkinSelected(int index)
+	{
+		CharacterSkin skin = CharacterSkin.values()[index];
+		imgCharSkin.setColor(skin.getColor());
+	}
+	
+	/**
+	 * Saves changes made in settings, and returns to the main menu.
+	 */
+	private void onSaveClicked()
+	{
+		saveSettings();
+		onCancelClicked();
+	}
+	
+	/**
+	 * Closes the options window, returns to the main menu.
+	 */
+	private void onCancelClicked()
+	{
+		btnMenuPlay.setVisible(true);
+		btnMenuOptions.setVisible(true);
+		winOptions.setVisible(false);
+	}
+	
+	/**
+	 * Save changes made to settings in the options menu.
+	 */
+	private void saveSettings()
+	{
+		GamePreferences prefs = GamePreferences.instance;
+		prefs.sound = chkSound.isChecked();
+		prefs.volSound = sldSound.getValue();
+		prefs.music = chkMusic.isChecked();
+		prefs.volMusic = sldMusic.getValue();
+		prefs.charSkin = selCharSkin.getSelectedIndex();
+		prefs.showFpsCounter = chkShowFpsCounter.isChecked();
+		prefs.save();
 	}
 	
 	/**
