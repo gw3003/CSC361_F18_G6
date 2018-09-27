@@ -344,6 +344,17 @@ public class MenuScreen extends AbstractGameScreen
 	}
 	
 	/**
+	 * Loads the options window, hides other buttons.
+	 */
+	private void onOptionsClicked()
+	{
+		loadSettings();
+		btnMenuPlay.setVisible(false);
+		btnMenuOptions.setVisible(false);
+		winOptions.setVisible(true);
+	}
+	
+	/**
 	 * Updates the preview image for the character skin.
 	 * @param index		The selected character skin.
 	 */
