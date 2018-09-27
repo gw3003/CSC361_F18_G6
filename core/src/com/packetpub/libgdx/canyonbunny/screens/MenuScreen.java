@@ -129,9 +129,23 @@ public class MenuScreen extends AbstractGameScreen
 		return layer;
 	}
 	
+	/**
+	 * Builds the logos layer of the menu screen.
+	 * @return		The logos layer.
+	 */
 	private Table buildLogosLayer()
 	{
 		Table layer = new Table();
+		layer.left().top();
+		// + Game Logo
+		imgLogo = new Image(skinCanyonBunny, "logo");
+		layer.add(imgLogo);
+		layer.row().expandY();
+		// + Info Logos
+		imgInfo = new Image(skinCanyonBunny, "info");
+		layer.add(imgInfo).bottom();
+		if (debugEnabled)
+			layer.debug();
 		return layer;
 	}
 	
