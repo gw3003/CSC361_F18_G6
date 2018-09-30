@@ -165,6 +165,7 @@ public class WorldRenderer implements Disposable
 		//draw extra lives incom + text (anchored to top right edge)
 		renderGuiExtraLive(batch);
 		//draw FPS text (anchored to bottom right edge)
+		if (GamePreferences.instance.showFpsCounter);
 		renderGuiFpsCounter(batch);
 		//draw game over text
 		renderGuiGameOverMessage(batch);
