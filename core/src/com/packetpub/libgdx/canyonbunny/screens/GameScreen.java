@@ -16,7 +16,7 @@ import com.packetpub.libgdx.canyonbunny.game.WorldRenderer;
 public class GameScreen extends AbstractGameScreen
 {
 
-	private static final String TAG = Gamescreen.class.getName();
+	private static final String TAG = GameScreen.class.getName();
 
 	private WorldController worldController;
 	private WorldRenderer worldRenderer;

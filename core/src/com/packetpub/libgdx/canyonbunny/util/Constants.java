@@ -34,4 +34,6 @@ public class Constants
 	public static final String TEXTURE_ATLAS_LIBGDX_UI = "images/uiskin.atlas";
 	public static final String SKIN_LIBGDX_UI = "images/uiskin.json";
 	public static final String SKIN_CANYONBUNNY_UI = "images/canyonbunny-ui.json";
+	
+	public static final String PREFERENCES = "canyonbunny.prefs";
 }
