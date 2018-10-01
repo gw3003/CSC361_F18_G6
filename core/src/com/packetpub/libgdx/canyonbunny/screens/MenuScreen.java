@@ -461,7 +461,7 @@ public class MenuScreen extends AbstractGameScreen
 		
 		stage.act(deltaTime);
 		stage.draw();
-		Table.drawDebug(stage);
+		stage.setDebugAll(true);
 	}
 	
 	/**

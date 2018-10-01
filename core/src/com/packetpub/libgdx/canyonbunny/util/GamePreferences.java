@@ -2,7 +2,6 @@ package com.packetpub.libgdx.canyonbunny.util;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
-import com.badlogc.gdx.math.MathUtils;
 
 /**
  * @author Gabe Werick
