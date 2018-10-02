@@ -52,7 +52,9 @@ public class GamePreferences
 		prefs.putBoolean("sound", sound);
 		prefs.putBoolean("music", music);
 		prefs.putFloat("volSound", volSound);
-		prefs.putFloat("charSkin", charSkin);
+		prefs.putFloat("volMusic", volMusic);
+		prefs.putInteger("charSkin", charSkin);
 		prefs.putBoolean("showFpsCounter", showFpsCounter);
+		prefs.flush();
 	}
 }
