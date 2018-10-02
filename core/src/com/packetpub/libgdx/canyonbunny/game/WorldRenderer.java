@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
+import com.packetpub.libgdx.canyonbunny.util.GamePreferences;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -165,6 +166,7 @@ public class WorldRenderer implements Disposable
 		//draw extra lives incom + text (anchored to top right edge)
 		renderGuiExtraLive(batch);
 		//draw FPS text (anchored to bottom right edge)
+		if (GamePreferences.instance.showFpsCounter);
 		renderGuiFpsCounter(batch);
 		//draw game over text
 		renderGuiGameOverMessage(batch);
