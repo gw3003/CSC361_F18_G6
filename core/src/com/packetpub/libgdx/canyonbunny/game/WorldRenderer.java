@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.Disposable;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
@@ -12,7 +13,8 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 /**
- * @author Gabe Werick Contains methods for displaying the world
+ * @author Gabe Werick
+ * Contains methods for displaying the world
  */
 public class WorldRenderer implements Disposable
 {
@@ -24,7 +26,7 @@ public class WorldRenderer implements Disposable
 	/**
 	 * Constructor for WorldRenderer, initializes worldController then calls init
 	 * 
-	 * @param worldController
+	 * @param worldController	WorldController being used.
 	 */
 	public WorldRenderer(WorldController worldController)
 	{
@@ -84,7 +86,7 @@ public class WorldRenderer implements Disposable
 	
 	/**
 	 * Responsible for rendering the world
-	 * @param batch SpriteBatch object
+	 * @param batch SpriteBatch object being used to draw
 	 */
 	private void renderWorld(SpriteBatch batch)
 	{
@@ -97,20 +99,30 @@ public class WorldRenderer implements Disposable
 	
 	/**
 	 * Responsible for render score gui element
-	 * @param batch Spritebatch object
+	 * @param batch Spritebatch object being used to draw
 	 */
 	private void renderGuiScore (SpriteBatch batch)
 	{
 		float x = -15;
-		float y = - 15;
+		float y = -15;
+		float offsetX = 50;
+		float offsetY = 50;
 		
-		batch.draw(Assets.instance.goldCoin.goldCoin, x, y, 50, 50, 100, 100, 0.35f, -0.35f, 0);
-		Assets.instance.fonts.defaultBig.draw(batch, "" + worldController.score, x + 75, y + 37);
+		if (worldController.scoreVisual < worldController.score)
+		{
+			long shakeAlpha = System.currentTimeMillis() % 360;
+			float shakeDist = 1.5f;
+			offsetX += MathUtils.sinDeg(shakeAlpha * 2.2f) * shakeDist;
+			offsetY += MathUtils.sinDeg(shakeAlpha * 2.9f) * shakeDist;
+		}
+		
+		batch.draw(Assets.instance.goldCoin.goldCoin, x, y, offsetX, offsetY, 100, 100, 0.35f, -0.35f, 0);
+		Assets.instance.fonts.defaultBig.draw(batch, "" + (int)worldController.scoreVisual, x + 75, y + 37);
 	}
 	
 	/**
 	 * Responsible for rendering extra lives
-	 * @param batch Spritebatch object
+	 * @param batch Spritebatch object being used to draw
 	 */
 	private void renderGuiExtraLive(SpriteBatch batch)
 	{
@@ -124,9 +136,24 @@ public class WorldRenderer implements Disposable
 			batch.draw(Assets.instance.bunny.head, x + i * 50, y, 50, 50, 120, 100, 0.35f, -0.35f, 0);
 			batch.setColor(1, 1, 1, 1);
 		}
+		
+		if (worldController.lives >= 0 && worldController.livesVisual > worldController.lives)
+		{
+			int i = worldController.lives;
+			float alphaColor = Math.max(0, worldController.livesVisual - worldController.lives -0.5f);
+			float alphaScale = 0.35f * (2 + worldController.lives - worldController.livesVisual) * 2;
+			float alphaRotate = -45 * alphaColor;
+			batch.setColor(1.0f, 0.7f, 0.7f, alphaColor);
+			batch.draw(Assets.instance.bunny.head, x + i * 50, y, 50, 50, 120, 100,
+					alphaScale, -alphaScale, alphaRotate);
+			batch.setColor(1, 1, 1, 1);
+		}
 	}
 	
-	//responsible for rendering fps counter
+	/**
+	 * responsible for rendering fps counter
+	 * @param batch		The spritebatch being used to draw
+	 */
 	private void renderGuiFpsCounter (SpriteBatch batch)
 	{
 		float x = cameraGUI.viewportWidth -55;
@@ -152,7 +179,7 @@ public class WorldRenderer implements Disposable
 	
 	/**
 	 * Calls rendering methods for GUI
-	 * @param batch Sprite batch object
+	 * @param batch Sprite batch object being used to draw
 	 */
 	private void renderGui(SpriteBatch batch)
 	{
@@ -175,7 +202,7 @@ public class WorldRenderer implements Disposable
 	
 	/**
 	 * Renders a game over message on the screen when called
-	 * @param batch the Spritebatch object
+	 * @param batch the Spritebatch object being used to draw
 	 */
 	private void renderGuiGameOverMessage(SpriteBatch batch)
 	{
@@ -192,7 +219,7 @@ public class WorldRenderer implements Disposable
 	
 	/**
 	 * If the feather powerup is active this handle showing the powerup
-	 * @param batch the spritebatch object
+	 * @param batch the spritebatch object being used to draw
 	 */
 	private void renderGuiFeatherPowerup(SpriteBatch batch)
 	{

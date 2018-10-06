@@ -23,6 +23,8 @@ import com.packetpub.libgdx.canyonbunny.game.objects.GoldCoin;
 import com.packetpub.libgdx.canyonbunny.game.objects.Rock;
 import com.badlogic.gdx.Game;
 import com.packetpub.libgdx.canyonbunny.screens.MenuScreen;
+import com.badlogic.gdx.math.MathUtils;
+
 
 /**
  * @author Kevin Rutter
@@ -36,11 +38,14 @@ public class WorldController extends InputAdapter
 	
 	public CameraHelper cameraHelper;
 	
+	public float scoreVisual;
 	public Level level;
 	public int lives;
 	public int score;
+	public float livesVisual;
 	private float timeLeftGameOverDelay;
 	private Game game;
+	
 	
 	// Rectangles for collision detection
 	private Rectangle r1 = new Rectangle();
@@ -178,13 +183,18 @@ public class WorldController extends InputAdapter
 		Gdx.input.setInputProcessor(this);
 		cameraHelper = new CameraHelper();
 		lives = Constants.LIVES_START;
+		livesVisual = lives;
 		timeLeftGameOverDelay = 0;
 		initLevel();
 	}
 	
+	/**
+	 * Initializes the level to the starting state described by level file
+	 */
 	public void initLevel()
 	{
 		score = 0;
+		scoreVisual = score;
 		level = new Level(Constants.LEVEL_01);
 		cameraHelper.setTarget(level.bunnyHead);
 	}
@@ -304,6 +314,11 @@ public class WorldController extends InputAdapter
 			else
 				initLevel();
 		}
+		level.mountains.updateScrollPosition(cameraHelper.getPosition());
+		if(livesVisual > lives)
+			livesVisual = Math.max(lives,  livesVisual - 1 * deltaTime);
+		if(scoreVisual < score)
+			scoreVisual = Math.min(scoreVisual,  scoreVisual + 250 * deltaTime);
 	}
 	
 	/**
