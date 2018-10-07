@@ -11,17 +11,22 @@ import com.packetpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 
 /**
  * @author Kevin Rutter Handles texture loading using a texture atlas.
  */
-public class Assets implements Disposable, AssetErrorListener {
+public class Assets implements Disposable, AssetErrorListener 
+{
 	public static final String TAG = Assets.class.getName();
 
 	public static final Assets instance = new Assets();
 
 	private AssetManager assetManager;
 
+	public AssetSounds sounds;
+	public AssetMusic music;
 	public AssetFonts fonts;
 	public AssetBunny bunny;
 	public AssetRock rock;
@@ -30,7 +35,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	public AssetLevelDecoration levelDecoration;
 
 	// singleton: prevent instantiation from other classes
-	private Assets() {
+	private Assets() 
+	{
 	}
 	/**
 	 * Fonts for the game
@@ -38,12 +44,14 @@ public class Assets implements Disposable, AssetErrorListener {
 	 *
 	 */
 	
-	public class AssetFonts {
+	public class AssetFonts 
+	{
 		public final BitmapFont defaultSmall;
 		public final BitmapFont defaultNormal;
 		public final BitmapFont defaultBig;
 		
-		public AssetFonts () {
+		public AssetFonts () 
+		{
 			//Create three fonts using Libgdx' 15px bitmap font
 			defaultSmall = new BitmapFont(
 					Gdx.files.internal("images/arial-15.fnt"),true);
@@ -72,12 +80,21 @@ public class Assets implements Disposable, AssetErrorListener {
 	 * @param assetManager
 	 *            The asset manager this class will use.
 	 */
-	public void init(AssetManager assetManager) {
+	public void init(AssetManager assetManager) 
+	{
 		this.assetManager = assetManager;
 		// set asset manager error handler
 		assetManager.setErrorListener(this);
 		// load texture atlas
 		assetManager.load(Constants.TEXTURE_ATLAS_OBJECTS, TextureAtlas.class);
+		//load sounds
+		assetManager.load("sounds/jump.wav", Sound.class);
+		assetManager.load("sounds/jump_with_feather.wav", Sound.class);
+		assetManager.load("sounds/pickup_coin.wav", Sound.class);
+		assetManager.load("sounds/pickup_feather.wav", Sound.class);
+		assetManager.load("sounds/live_lost.wav", Sound.class);
+		//load music
+		assetManager.load("music/keith303_-_brand_new_highscore.mp3", Music.class);
 		// start loading assets and wait until finished
 		assetManager.finishLoading();
 		Gdx.app.debug(TAG, "# of assets loaded: " + assetManager.getAssetNames().size);
@@ -87,7 +104,8 @@ public class Assets implements Disposable, AssetErrorListener {
 		TextureAtlas atlas = assetManager.get(Constants.TEXTURE_ATLAS_OBJECTS);
 
 		// enable texture filtering for pixel smoothing
-		for (Texture t : atlas.getTextures()) {
+		for (Texture t : atlas.getTextures()) 
+		{
 			t.setFilter(TextureFilter.Linear, TextureFilter.Linear);
 		}
 
@@ -98,13 +116,16 @@ public class Assets implements Disposable, AssetErrorListener {
 		goldCoin = new AssetGoldCoin(atlas);
 		feather = new AssetFeather(atlas);
 		levelDecoration = new AssetLevelDecoration(atlas);
+		sounds = new AssetSounds(assetManager);
+		music = new AssetMusic(assetManager);
 	}
 
 	/**
 	 * Tell the asset manager to to unload assets.
 	 */
 	@Override
-	public void dispose() {
+	public void dispose() 
+	{
 		assetManager.dispose();
 		fonts.defaultSmall.dispose();
 		fonts.defaultNormal.dispose();
@@ -123,7 +144,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	/**
 	 * @author Kevin Rutter Initializes and holds the game's decorative textures.
 	 */
-	public class AssetLevelDecoration {
+	public class AssetLevelDecoration 
+	{
 		public final AtlasRegion cloud01;
 		public final AtlasRegion cloud02;
 		public final AtlasRegion cloud03;
@@ -137,7 +159,8 @@ public class Assets implements Disposable, AssetErrorListener {
 		 * @param atlas
 		 *            The texture atlas being used.
 		 */
-		public AssetLevelDecoration(TextureAtlas atlas) {
+		public AssetLevelDecoration(TextureAtlas atlas) 
+		{
 			cloud01 = atlas.findRegion("cloud01");
 			cloud02 = atlas.findRegion("cloud02");
 			cloud03 = atlas.findRegion("cloud03");
@@ -150,7 +173,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	/**
 	 * @author Gabe Werick This class holds info for the Bunny Head texture
 	 */
-	public class AssetBunny {
+	public class AssetBunny 
+	{
 		public final AtlasRegion head;
 
 		/**
@@ -159,7 +183,8 @@ public class Assets implements Disposable, AssetErrorListener {
 		 * @param atlas
 		 *            Texture atlas
 		 */
-		public AssetBunny(TextureAtlas atlas) {
+		public AssetBunny(TextureAtlas atlas) 
+		{
 			head = atlas.findRegion("bunny_head");
 		}
 	}
@@ -167,7 +192,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	/**
 	 * @author Gabe Werick This class holds info for rock edge and middle texture
 	 */
-	public class AssetRock {
+	public class AssetRock 
+	{
 		public final AtlasRegion edge;
 		public final AtlasRegion middle;
 
@@ -177,7 +203,8 @@ public class Assets implements Disposable, AssetErrorListener {
 		 * @param atlas
 		 *            Texture atlas
 		 */
-		public AssetRock(TextureAtlas atlas) {
+		public AssetRock(TextureAtlas atlas) 
+		{
 			edge = atlas.findRegion("rock_edge");
 			middle = atlas.findRegion("rock_middle");
 		}
@@ -186,7 +213,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	/**
 	 * @author Gabe Werick This class holds info for the Gold Coin texture
 	 */
-	public class AssetGoldCoin {
+	public class AssetGoldCoin 
+	{
 		public final AtlasRegion goldCoin;
 
 		/**
@@ -195,7 +223,8 @@ public class Assets implements Disposable, AssetErrorListener {
 		 * @param atlas
 		 *            Texture atlas
 		 */
-		public AssetGoldCoin(TextureAtlas atlas) {
+		public AssetGoldCoin(TextureAtlas atlas) 
+		{
 			goldCoin = atlas.findRegion("item_gold_coin");
 		}
 	}
@@ -203,7 +232,8 @@ public class Assets implements Disposable, AssetErrorListener {
 	/**
 	 * @author Gabe Werick This class holds info for the Feather texture
 	 */
-	public class AssetFeather {
+	public class AssetFeather 
+	{
 		public final AtlasRegion feather;
 
 		/**
@@ -212,11 +242,44 @@ public class Assets implements Disposable, AssetErrorListener {
 		 * @param atlas
 		 *            Texture atlas
 		 */
-		public AssetFeather(TextureAtlas atlas) {
+		public AssetFeather(TextureAtlas atlas) 
+		{
 			feather = atlas.findRegion("item_feather");
 			
 		}
 
+	}
+	
+	/**
+	 * @Author Tyler Forrester This class holds info for the sounds
+	 */
+	public class AssetSounds
+	{
+		public final Sound jump;
+		public final Sound jumpWithFeather;
+		public final Sound pickupCoin;
+		public final Sound pickupFeather;
+		public final Sound liveLost;
+		public AssetSounds (AssetManager am)
+		{
+			jump = am.get("sounds/jump.wav", Sound.class);
+			jumpWithFeather = am.get("sounds/jump_with_feather.wav",Sound.class);
+			pickupCoin = am.get("sounds/pickup_coin.wav", Sound.class);
+			pickupFeather = am.get("sounds/pickup_feather.wave", Sound.class);
+			liveLost = am.get("sounds/live_lost.wav", Sound.class);
+		}
+	}
+	/**
+	 * @Author Tyler Forrester This class holds info for the game music
+	 */
+	public class AssetMusic
+	{
+		public final Music song01;
+		
+		public AssetMusic (AssetManager am)
+		{
+			song01 = am.get("music/keith303_-_brand_new_highscore.mp3", Music.class);
+		}
 	}
 
 }
