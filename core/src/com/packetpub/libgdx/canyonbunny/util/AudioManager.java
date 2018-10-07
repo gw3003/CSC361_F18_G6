@@ -65,4 +65,50 @@ public class AudioManager
 			return;
 		sound.play(GamePreferences.instance.volSound * volume, pitch, pan);
 	}
+	
+	/**
+	 * Plays a given music track in the background.
+	 * @param music		The music that will be played.
+	 */
+	public void play(Music music)
+	{
+		stopMusic();
+		playingMusic = music;
+		if (GamePreferences.instance.music)
+		{
+			music.setLooping(true);
+			music.setVolume(GamePreferences.instance.volMusic);
+			music.play();
+		}
+	}
+	
+	/**
+	 * Stops playing the current music.
+	 */
+	public void stopMusic()
+	{
+		if (playingMusic != null)
+			playingMusic.stop();
+	}
+	
+	/**
+	 * Call this when options menu changes settings so AudioManager can be updated.
+	 */
+	public void onSettingsUpdated()
+	{
+		if (playingMusic == null)
+			return;
+		
+		playingMusic.setVolume(GamePreferences.instance.volMusic);
+		
+		if (GamePreferences.instance.music)
+		{
+			if (!playingMusic.isPlaying())
+				playingMusic.play();
+		}
+		else
+		{
+			playingMusic.pause();
+		}
+	}
 }
