@@ -318,7 +318,7 @@ public class WorldController extends InputAdapter
 		if(livesVisual > lives)
 			livesVisual = Math.max(lives,  livesVisual - 1 * deltaTime);
 		if(scoreVisual < score)
-			scoreVisual = Math.min(scoreVisual,  scoreVisual + 250 * deltaTime);
+			scoreVisual = Math.min(score,  scoreVisual + 250 * deltaTime);
 	}
 	
 	/**

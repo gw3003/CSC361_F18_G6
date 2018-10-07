@@ -58,7 +58,7 @@ public class Mountains extends AbstractGameObject
 		TextureRegion reg = null;
 		batch.setColor(tintColor, tintColor, tintColor, 1);
 		float xRel = dimension.x * offsetX;
-		float yRel = dimension.x * offsetY;
+		float yRel = dimension.y * offsetY;
 		
 		//mountains span the whole level
 		int mountainLength = 0;
