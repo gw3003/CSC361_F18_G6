@@ -7,6 +7,8 @@ import com.packetpub.libgdx.canyonbunny.game.Assets;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
+import com.badlogic.gdx.math.MathUtils;
+import com.packetpub.libgdx.canyonbunny.util.AudioManager;
 
 /**
  * The main character of the game that the player controls
@@ -83,6 +85,7 @@ public class BunnyHead extends AbstractGameObject
 		switch (jumpState) {
 			case GROUNDED: //Character is standing on a platform
 				if (jumpKeyPressed) {
+					AudioManager.instance.play(Assets.instance.sounds.jump);
 					//Start counting jump time form the beginning
 					timeJumping = 0;
 					jumpState = JUMP_STATE.JUMP_RISING;
@@ -95,6 +98,7 @@ public class BunnyHead extends AbstractGameObject
 			case FALLING: //Falling down
 			case JUMP_FALLING: //Falling down after jump
 			if (jumpKeyPressed && hasFeatherPowerup) {
+				AudioManager.instance.play(Assets.instance.sounds.jumpWithFeather, 1, MathUtils.random(1.0f, 1.1f));
 				timeJumping = JUMP_TIME_OFFSET_FLYING;
 				jumpState = JUMP_STATE.JUMP_RISING;
 			}
