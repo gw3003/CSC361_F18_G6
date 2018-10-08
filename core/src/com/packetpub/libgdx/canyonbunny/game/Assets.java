@@ -263,7 +263,7 @@ public class Assets implements Disposable, AssetErrorListener
 			jump = am.get("sounds/jump.wav", Sound.class);
 			jumpWithFeather = am.get("sounds/jump_with_feather.wav", Sound.class);
 			pickupCoin = am.get("sounds/pickup_coin.wav", Sound.class);
-			pickupFeather = am.get("sounds/pickup_feather.wave", Sound.class);
+			pickupFeather = am.get("sounds/pickup_feather.wav", Sound.class);
 			liveLost = am.get("sounds/live_lost.wav", Sound.class);
 		}
 	}
