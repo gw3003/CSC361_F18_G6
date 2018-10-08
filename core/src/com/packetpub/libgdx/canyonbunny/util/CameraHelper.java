@@ -16,7 +16,7 @@ public class CameraHelper
 	private final float MAX_ZOOM_IN = 0.25f;
 	private final float MAX_ZOOM_OUT = 10.0f;
 	private final float FOLLOW_SPEED = 4.0f;
-	
+
 	private Vector2 position;
 	private float zoom;
 	private AbstractGameObject target;
@@ -33,25 +33,29 @@ public class CameraHelper
 	/**
 	 * Sets position to that of our target
 	 * 
-	 * @param deltaTime current deltaTime
+	 * @param deltaTime
+	 *            current deltaTime
 	 */
 	public void update(float deltaTime)
 	{
-		if (!hasTarget()) return;
+		if (!hasTarget())
+			return;
 
 		position.x = target.position.x + target.origin.x;
 		position.y = target.position.y + target.origin.y;
-		
+
 		position.lerp(target.position, FOLLOW_SPEED * deltaTime);
-		//Prevent camera from moving down too far
+		// Prevent camera from moving down too far
 		position.y = Math.max(-1f, position.y);
 	}
 
 	/**
 	 * Allows us to directly set position
 	 * 
-	 * @param x the x-coordinate
-	 * @param y the y-coordinate
+	 * @param x
+	 *            the x-coordinate
+	 * @param y
+	 *            the y-coordinate
 	 */
 	public void setPosition(float x, float y)
 	{
@@ -71,7 +75,8 @@ public class CameraHelper
 	/**
 	 * Allows us to increment zoom by some value
 	 * 
-	 * @param amount amount to add to zoom
+	 * @param amount
+	 *            amount to add to zoom
 	 */
 	public void addzoom(float amount)
 	{
@@ -81,7 +86,8 @@ public class CameraHelper
 	/**
 	 * Sets zoom to a number
 	 * 
-	 * @param zoom specifies desired zoom
+	 * @param zoom
+	 *            specifies desired zoom
 	 */
 	public void setZoom(float zoom)
 	{
@@ -101,7 +107,8 @@ public class CameraHelper
 	/**
 	 * Sets what Sprite object is our object
 	 * 
-	 * @param target desired target
+	 * @param target
+	 *            desired target
 	 */
 	public void setTarget(AbstractGameObject target)
 	{
@@ -131,7 +138,8 @@ public class CameraHelper
 	/**
 	 * returns if a sprite is the object
 	 * 
-	 * @param target desired
+	 * @param target
+	 *            desired
 	 * @return whether the sprite is the target
 	 */
 	public boolean hasTarget(AbstractGameObject target)

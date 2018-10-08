@@ -9,67 +9,74 @@ import com.packetpub.libgdx.canyonbunny.game.Assets;
 
 /**
  * Clouds acts as a container for the cloud objects.
+ * 
  * @author Kevin Rutter
  */
 public class Clouds extends AbstractGameObject
 {
 	private float length;
-	
+
 	private Array<TextureRegion> regClouds;
 	private Array<Cloud> clouds;
-	
+
 	/**
 	 * A single cloud object, which can be one of 3 images.
+	 * 
 	 * @author Kevin Rutter
 	 */
 	private class Cloud extends AbstractGameObject
 	{
 		private TextureRegion regCloud;
-		
+
 		/**
 		 * Clouds are created with spawnCloud() instead.
 		 */
 		public Cloud()
-		{	
+		{
 		}
-		
+
 		/**
 		 * Used to set the cloud image.
-		 * @param region	The random cloud image this cloud is being set to.
+		 * 
+		 * @param region
+		 *            The random cloud image this cloud is being set to.
 		 */
 		public void setRegion(TextureRegion region)
 		{
 			regCloud = region;
 		}
-		
+
 		/**
 		 * Renders the cloud object.
-		 * @param batch		SpriteBatch being used to draw the cloud.
+		 * 
+		 * @param batch
+		 *            SpriteBatch being used to draw the cloud.
 		 */
 		@Override
-		public void render (SpriteBatch batch)
+		public void render(SpriteBatch batch)
 		{
 			TextureRegion reg = regCloud;
-			batch.draw(reg.getTexture(), position.x + origin.x, position.y + origin.y,
-					origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation,
-					reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(), reg.getRegionHeight(),
-					false, false);
+			batch.draw(reg.getTexture(), position.x + origin.x, position.y + origin.y, origin.x, origin.y, dimension.x,
+					dimension.y, scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(),
+					reg.getRegionHeight(), false, false);
 		}
 	}
-	
+
 	/**
 	 * Constructor for the clouds container.
-	 * @param length	The length of the screen.
+	 * 
+	 * @param length
+	 *            The length of the screen.
 	 */
 	public Clouds(float length)
 	{
 		this.length = length;
 		init();
 	}
-	
+
 	/**
-	 * Initialize the clouds container, spawn an amount of clouds based
-	 * on the length and distFac.
+	 * Initialize the clouds container, spawn an amount of clouds based on the
+	 * length and distFac.
 	 */
 	private void init()
 	{
@@ -78,10 +85,10 @@ public class Clouds extends AbstractGameObject
 		regClouds.add(Assets.instance.levelDecoration.cloud01);
 		regClouds.add(Assets.instance.levelDecoration.cloud02);
 		regClouds.add(Assets.instance.levelDecoration.cloud03);
-		
+
 		int distFac = 5;
-		int numClouds = (int)(length / distFac);
-		clouds= new Array<Cloud>(2 * numClouds);
+		int numClouds = (int) (length / distFac);
+		clouds = new Array<Cloud>(2 * numClouds);
 		for (int i = 0; i < numClouds; i++)
 		{
 			Cloud cloud = spawnCloud();
@@ -92,7 +99,8 @@ public class Clouds extends AbstractGameObject
 
 	/**
 	 * Used to create a cloud.
-	 * @return	The clouds created.
+	 * 
+	 * @return The clouds created.
 	 */
 	private Cloud spawnCloud()
 	{
@@ -107,7 +115,7 @@ public class Clouds extends AbstractGameObject
 		// random additional position
 		pos.y += MathUtils.random(0.0f, 0.2f) * (MathUtils.randomBoolean() ? 1 : -1); // random additional position
 		cloud.position.set(pos);
-		
+
 		// speed
 		Vector2 speed = new Vector2();
 		speed.x += 0.5f; // base speed
@@ -118,10 +126,12 @@ public class Clouds extends AbstractGameObject
 		cloud.velocity.set(speed);
 		return cloud;
 	}
-	
+
 	/**
 	 * Used to render each cloud in the clouds container.
-	 * @param batch		The spritebatch being used to draw the clouds.
+	 * 
+	 * @param batch
+	 *            The spritebatch being used to draw the clouds.
 	 */
 	@Override
 	public void render(SpriteBatch batch)
@@ -129,11 +139,13 @@ public class Clouds extends AbstractGameObject
 		for (Cloud cloud : clouds)
 			cloud.render(batch);
 	}
-	
+
 	/**
 	 * Iterates through each cloud and updates them, then checks if they've reached
 	 * the end of the level or not, removing and spawning a new one if so.
-	 * @param deltaTime		Amount of time since last update.
+	 * 
+	 * @param deltaTime
+	 *            Amount of time since last update.
 	 */
 	@Override
 	public void update(float deltaTime)
