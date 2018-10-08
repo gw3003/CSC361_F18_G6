@@ -25,6 +25,7 @@ import com.packetpub.libgdx.canyonbunny.game.Assets;
 import com.packetpub.libgdx.canyonbunny.util.Constants;
 import com.packetpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packetpub.libgdx.canyonbunny.util.GamePreferences;
+import com.packetpub.libgdx.canyonbunny.util.AudioManager;
 
 /**
  * This screen is for the main menu of the game.
@@ -412,6 +413,7 @@ public class MenuScreen extends AbstractGameScreen
 	{
 		saveSettings();
 		onCancelClicked();
+		AudioManager.instance.onSettingsUpdated();
 	}
 	
 	/**
@@ -422,6 +424,7 @@ public class MenuScreen extends AbstractGameScreen
 		btnMenuPlay.setVisible(true);
 		btnMenuOptions.setVisible(true);
 		winOptions.setVisible(false);
+		AudioManager.instance.onSettingsUpdated();
 	}
 	
 	/**
