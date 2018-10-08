@@ -27,7 +27,8 @@ public class GameScreen extends AbstractGameScreen
 	 * Constructor for gamescreen, simply passes game to the constructor of the
 	 * parent class
 	 * 
-	 * @param game game object to be passed
+	 * @param game
+	 *            game object to be passed
 	 */
 	public GameScreen(Game game)
 	{
