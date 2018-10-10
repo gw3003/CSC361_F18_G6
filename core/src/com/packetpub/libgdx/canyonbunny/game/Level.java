@@ -64,7 +64,8 @@ public class Level
 	/**
 	 * Constructor, calls init
 	 * 
-	 * @param filename filename to level layout
+	 * @param filename
+	 *            filename to level layout
 	 */
 	public Level(String filename)
 	{
@@ -76,7 +77,7 @@ public class Level
 	 */
 	private void init(String filename)
 	{
-		//player character
+		// player character
 		bunnyHead = null;
 		// objects
 		rocks = new Array<Rock>();
@@ -137,7 +138,7 @@ public class Level
 					obj = new Feather();
 					offsetHeight = -1.5f;
 					obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
-					feathers.add((Feather)obj);
+					feathers.add((Feather) obj);
 				}
 				// gold coin
 				else if (BLOCK_TYPE.ITEM_GOLD_COIN.sameColor(currentPixel))
@@ -145,7 +146,7 @@ public class Level
 					obj = new GoldCoin();
 					offsetHeight = -1.5f;
 					obj.position.set(pixelX, baseHeight * obj.dimension.y + offsetHeight);
-					goldcoins.add((GoldCoin)obj);
+					goldcoins.add((GoldCoin) obj);
 				}
 
 				// unknown object/pixel color
@@ -177,7 +178,8 @@ public class Level
 	/**
 	 * Handles rendering of objects
 	 * 
-	 * @param batch Spritebatch object
+	 * @param batch
+	 *            Spritebatch object
 	 */
 	public void render(SpriteBatch batch)
 	{
@@ -187,16 +189,16 @@ public class Level
 		// Draw Rocks
 		for (Rock rock : rocks)
 			rock.render(batch);
-		
+
 		// Draw Gold Coins
 		for (GoldCoin goldCoin : goldcoins)
 			goldCoin.render(batch);
-		
+
 		// Draw Rocks
 		for (Feather feather : feathers)
 			feather.render(batch);
-		
-		//Draw player Character
+
+		// Draw player Character
 		bunnyHead.render(batch);
 
 		// Draw Water overlay
@@ -205,19 +207,21 @@ public class Level
 		// Draw Clouds
 		clouds.render(batch);
 	}
-	
+
 	/**
 	 * Calls update method of each object in this class
-	 * @param deltaTime current deltaTime
+	 * 
+	 * @param deltaTime
+	 *            current deltaTime
 	 */
 	public void update(float deltaTime)
 	{
 		bunnyHead.update(deltaTime);
-		for(Rock rock : rocks)
+		for (Rock rock : rocks)
 			rock.update(deltaTime);
-		for(GoldCoin goldCoin : goldcoins)
+		for (GoldCoin goldCoin : goldcoins)
 			goldCoin.update(deltaTime);
-		for(Feather feather : feathers)
+		for (Feather feather : feathers)
 			feather.update(deltaTime);
 		clouds.update(deltaTime);
 	}

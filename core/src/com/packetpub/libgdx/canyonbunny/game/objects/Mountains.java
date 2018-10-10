@@ -20,7 +20,8 @@ public class Mountains extends AbstractGameObject
 	/**
 	 * Constructor, gets length then calls init method
 	 * 
-	 * @param length desired length of mountains
+	 * @param length
+	 *            desired length of mountains
 	 */
 	public Mountains(int length)
 	{
@@ -46,39 +47,50 @@ public class Mountains extends AbstractGameObject
 	/**
 	 * Draws the mountain background
 	 * 
-	 * @param batch     the spritebatch object
-	 * @param offsetX   x offset for drawing the mountains
-	 * @param offsetY   y offset for drawing the mountains
-	 * @param tintColor desired tint to mountains
+	 * @param batch
+	 *            the spritebatch object
+	 * @param offsetX
+	 *            x offset for drawing the mountains
+	 * @param offsetY
+	 *            y offset for drawing the mountains
+	 * @param tintColor
+	 *            desired tint to mountains
 	 */
 	/**
 	 * Draws the mountain in the scenens correctly
 	 */
-	private void drawMountain (SpriteBatch batch, float offsetX, float offsetY, float tintColor, float parallaxSpeedX) {
+	private void drawMountain(SpriteBatch batch, float offsetX, float offsetY, float tintColor, float parallaxSpeedX)
+	{
 		TextureRegion reg = null;
 		batch.setColor(tintColor, tintColor, tintColor, 1);
 		float xRel = dimension.x * offsetX;
 		float yRel = dimension.y * offsetY;
-		
-		//mountains span the whole level
+
+		// mountains span the whole level
 		int mountainLength = 0;
 		mountainLength += MathUtils.ceil(length / (2 * dimension.x) * (1 - parallaxSpeedX));
 		mountainLength += MathUtils.ceil(0.5f + offsetX);
-		for (int i = 0; i<mountainLength; i++) {
-			
-			//mountain left
+		for (int i = 0; i < mountainLength; i++)
+		{
+
+			// mountain left
 			reg = regMountainLeft;
-			batch.draw(reg.getTexture(), origin.x + xRel + position.x * parallaxSpeedX,  origin.y + yRel + position.y,  origin.x,  origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),reg.getRegionY(),reg.getRegionWidth(),reg.getRegionHeight(),false,false);
+			batch.draw(reg.getTexture(), origin.x + xRel + position.x * parallaxSpeedX, origin.y + yRel + position.y,
+					origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),
+					reg.getRegionY(), reg.getRegionWidth(), reg.getRegionHeight(), false, false);
 			xRel += dimension.x;
-			
-			//mountain right
+
+			// mountain right
 			reg = regMountainRight;
-			batch.draw(reg.getTexture(), origin.x + xRel + position.x * parallaxSpeedX, origin.y + yRel + position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(), reg.getRegionHeight(),false,false);
+			batch.draw(reg.getTexture(), origin.x + xRel + position.x * parallaxSpeedX, origin.y + yRel + position.y,
+					origin.x, origin.y, dimension.x, dimension.y, scale.x, scale.y, rotation, reg.getRegionX(),
+					reg.getRegionY(), reg.getRegionWidth(), reg.getRegionHeight(), false, false);
 			xRel += dimension.x;
 		}
 		// reset color to white
 		batch.setColor(1, 1, 1, 1);
 	}
+
 	/**
 	 * Calls the draw mountain method, has 3 tints
 	 * 
@@ -96,11 +108,11 @@ public class Mountains extends AbstractGameObject
 		// distant mountains (light gray)
 		drawMountain(batch, 0.0f, 0.0f, 0.9f, 0.3f);
 	}
-	
+
 	/**
 	 * Updates the scrolling of the mountains
 	 */
-	public void updateScrollPosition (Vector2 camPosition) 
+	public void updateScrollPosition(Vector2 camPosition)
 	{
 		position.set(camPosition.x, position.y);
 	}

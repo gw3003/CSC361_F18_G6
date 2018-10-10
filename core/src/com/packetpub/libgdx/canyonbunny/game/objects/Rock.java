@@ -55,7 +55,8 @@ public class Rock extends AbstractGameObject
 	/**
 	 * Set the starting length of a rock.
 	 * 
-	 * @param length How wide (in meters) the rock will be.
+	 * @param length
+	 *            How wide (in meters) the rock will be.
 	 */
 	public void setLength(int length)
 	{
@@ -67,7 +68,8 @@ public class Rock extends AbstractGameObject
 	/**
 	 * Increase the length of a rock.
 	 * 
-	 * @param amount The amount of meters to increase the rocks length by.
+	 * @param amount
+	 *            The amount of meters to increase the rocks length by.
 	 */
 	public void increaseLength(int amount)
 	{
@@ -78,7 +80,8 @@ public class Rock extends AbstractGameObject
 	 * Renders the rock object, by drawing the left edge, a certain amount of middle
 	 * edges, and then
 	 * 
-	 * @param batch SpriteBatch being used to draw the rock.
+	 * @param batch
+	 *            SpriteBatch being used to draw the rock.
 	 */
 	@Override
 	public void render(SpriteBatch batch)
