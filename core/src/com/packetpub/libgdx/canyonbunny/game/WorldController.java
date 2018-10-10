@@ -25,6 +25,14 @@ import com.badlogic.gdx.Game;
 import com.packetpub.libgdx.canyonbunny.screens.MenuScreen;
 import com.badlogic.gdx.math.MathUtils;
 import com.packetpub.libgdx.canyonbunny.util.AudioManager;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.physics.box2d.World;
+import com.packetpub.libgdx.canyonbunny.game.objects.Carrot;
 
 /**
  * @author Kevin Rutter Contains controls for the game, such as for the camera,
@@ -48,9 +56,14 @@ public class WorldController extends InputAdapter
 	// Rectangles for collision detection
 	private Rectangle r1 = new Rectangle();
 	private Rectangle r2 = new Rectangle();
+	
+	private boolean goalReached;
+	public World b2world;
 
 	/**
 	 * Creates a game controller instance
+	 * 
+	 * @param game		The application listener for the game.
 	 */
 	public WorldController(Game game)
 	{
@@ -203,6 +216,35 @@ public class WorldController extends InputAdapter
 		scoreVisual = score;
 		level = new Level(Constants.LEVEL_01);
 		cameraHelper.setTarget(level.bunnyHead);
+	}
+	
+	/**
+	 * Initialize the world and BodyDef objects in order to track physics in Box2D.
+	 */
+	private void initPhysics()
+	{
+		if (b2world != null)
+			b2world.dispose();
+		b2world = new World(new Vector2(0, -9.81f), true);
+		
+		// Rocks
+		Vector2 origin = new Vector2();
+		for (Rock rock : level.rocks)
+		{
+			BodyDef bodyDef = new BodyDef();
+			bodyDef.type = BodyType.KinematicBody;
+			bodyDef.position.set(rock.position);
+			Body body = b2world.createBody(bodyDef);
+			rock.body = body;
+			PolygonShape polygonShape = new PolygonShape();
+			origin.x = rock.bounds.width / 2.0f;
+			origin.y = rock.bounds.height / 2.0f;
+			polygonShape.setAsBox(rock.bounds.width /2.0f, rock.bounds.height / 2.0f, origin, 0);
+			FixtureDef fixtureDef = new FixtureDef();
+			fixtureDef.shape = polygonShape;
+			body.createFixture(fixtureDef);
+			polygonShape.dispose();
+		}
 	}
 
 	/**
