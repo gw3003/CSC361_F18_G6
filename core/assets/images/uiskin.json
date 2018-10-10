@@ -17,7 +17,7 @@ com.badlogic.gdx.scenes.scene2d.ui.ScrollPane$ScrollPaneStyle: {
 },
 com.badlogic.gdx.scenes.scene2d.ui.SelectBox$SelectBoxStyle: {
 	default: {
-		font: default-font, fontColor: white, background: default-pane,
+		font: default-font, fontColor: white, background: default-select,
 		scrollStyle: default,
 		listStyle: { font: default-font, selection: default-select-selection }
 	}
@@ -27,7 +27,7 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 	dialog: { background: default, stageBackground: dialogDim }
 },
 com.badlogic.gdx.scenes.scene2d.ui.Slider$SliderStyle: {
-	default-horizontal: { knob: default-slider-knob}
+	default-horizontal: { knob: default-slider-knob, background: default-rect}
 },
 com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 	default: { font: default-font, fontColor: white }
