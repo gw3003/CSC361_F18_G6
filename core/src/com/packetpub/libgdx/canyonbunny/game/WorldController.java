@@ -508,4 +508,16 @@ public class WorldController extends InputAdapter
 			level.carrots.add(carrot);
 		}
 	}
+	
+	/**
+	 * Handles the event where the bunny reaches the goal.
+	 */
+	private void onCollisionBunnyWithGoal()
+	{
+		goalReached = true;
+		timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_FINSHED;
+		Vector2 centerPosBunnyHead = new Vector2(level.bunnyHead.position);
+		centerPosBunnyHead.x += level.bunnyHead.bounds.width;
+		spawnCarrots(centerPosBunnyHead, Constants.CARROTS_SPAWN_MAX, Constants.CARROTS_SPAWN_RADIUS);
+	}
 }
