@@ -33,12 +33,13 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.packetpub.libgdx.canyonbunny.game.objects.Carrot;
+import com.badlogic.gdx.utils.Disposable;
 
 /**
  * @author Kevin Rutter Contains controls for the game, such as for the camera,
  *         movement, etc.
  */
-public class WorldController extends InputAdapter
+public class WorldController extends InputAdapter implements Disposable
 {
 	// Tag used for logging purposes
 	private static final String TAG = WorldController.class.getName();
@@ -532,5 +533,15 @@ public class WorldController extends InputAdapter
 		Vector2 centerPosBunnyHead = new Vector2(level.bunnyHead.position);
 		centerPosBunnyHead.x += level.bunnyHead.bounds.width;
 		spawnCarrots(centerPosBunnyHead, Constants.CARROTS_SPAWN_MAX, Constants.CARROTS_SPAWN_RADIUS);
+	}
+	
+	/**
+	 * Frees up memory used by box2d's physics world.
+	 */
+	@Override
+	public void dispose()
+	{
+		if (b2world != null)
+			b2world.dispose();
 	}
 }
