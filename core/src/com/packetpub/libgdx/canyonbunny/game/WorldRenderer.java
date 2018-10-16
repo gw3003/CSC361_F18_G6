@@ -2,7 +2,7 @@ package com.packetpub.libgdx.canyonbunny.game;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Align;
@@ -21,6 +21,8 @@ public class WorldRenderer implements Disposable
 	private OrthographicCamera cameraGUI;
 	private SpriteBatch batch;
 	private WorldController worldController;
+	private static final boolean DEBUG_DRAW_BOX2D_WORLD = false;
+	private Box2DDebugRenderer b2debugRenderer;
 
 	/**
 	 * Constructor for WorldRenderer, initializes worldController then calls init
@@ -54,6 +56,7 @@ public class WorldRenderer implements Disposable
 		cameraGUI.position.set(0, 0, 0);
 		cameraGUI.setToOrtho(true);
 		cameraGUI.update();
+		b2debugRenderer = new Box2DDebugRenderer();
 	}
 
 	/**
@@ -98,6 +101,11 @@ public class WorldRenderer implements Disposable
 		batch.begin();
 		worldController.level.render(batch);
 		batch.end();
+		
+		if(DEBUG_DRAW_BOX2D_WORLD)
+		{
+			b2debugRenderer.render(worldController.b2world, camera.combined);
+		}
 	}
 
 	/**
