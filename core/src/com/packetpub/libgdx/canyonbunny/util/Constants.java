@@ -35,4 +35,13 @@ public class Constants
 	public static final String SKIN_CANYONBUNNY_UI = "images/canyonbunny-ui.json";
 
 	public static final String PREFERENCES = "canyonbunny.prefs";
+	
+	//number of carrots to spawn
+	public static final int CARROTS_SPAWN_MAX = 100;
+	
+	//Spawn radius for carrots
+	public static final float CARROTS_SPAWN_RADIUS = 3.5f;
+	
+	//Delay after game finished
+	public static final float TIME_DELAY_GAME_FINISHED = 6;
 }
