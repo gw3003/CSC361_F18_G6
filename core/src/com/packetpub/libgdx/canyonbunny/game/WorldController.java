@@ -489,7 +489,7 @@ public class WorldController extends InputAdapter implements Disposable
 		// create carrots with box2d body and fixture
 		for (int i = 0; i < numCarrots; i++)
 		{
-			Carrot carrot = new Carrot()
+			Carrot carrot = new Carrot();
 			// calculate random spawn position, rotation, and scale
 			float x = MathUtils.random(-radius, radius);
 			float y = MathUtils.random(5.0f, 15.0f);
