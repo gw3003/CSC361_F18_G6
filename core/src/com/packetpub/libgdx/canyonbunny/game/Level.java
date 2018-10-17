@@ -245,7 +245,7 @@ public class Level
 		for (Feather feather : feathers)
 			feather.update(deltaTime);
 		for(Carrot carrot :carrots)
-			carrot.Update(deltatime);
+			carrot.update(deltaTime);
 		clouds.update(deltaTime);
 	}
 }
