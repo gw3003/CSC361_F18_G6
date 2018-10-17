@@ -141,7 +141,7 @@ public class Assets implements Disposable, AssetErrorListener
 	/**
 	 * @author Kevin Rutter Initializes and holds the game's decorative textures.
 	 */
-	public class AssetLevelDecoration ()
+	public class AssetLevelDecoration 
 	{
 		public final AtlasRegion cloud01;
 		public final AtlasRegion cloud02;

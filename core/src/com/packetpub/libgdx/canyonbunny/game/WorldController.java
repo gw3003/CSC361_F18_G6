@@ -529,7 +529,7 @@ public class WorldController extends InputAdapter implements Disposable
 	private void onCollisionBunnyWithGoal()
 	{
 		goalReached = true;
-		timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_FINSHED;
+		timeLeftGameOverDelay = Constants.TIME_DELAY_GAME_FINISHED;
 		Vector2 centerPosBunnyHead = new Vector2(level.bunnyHead.position);
 		centerPosBunnyHead.x += level.bunnyHead.bounds.width;
 		spawnCarrots(centerPosBunnyHead, Constants.CARROTS_SPAWN_MAX, Constants.CARROTS_SPAWN_RADIUS);
