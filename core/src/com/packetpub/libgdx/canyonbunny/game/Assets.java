@@ -13,7 +13,8 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureFilter;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
-
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.utils.Array;
 /**
  * @author Kevin Rutter Handles texture loading using a texture atlas.
  */
@@ -177,6 +178,10 @@ public class Assets implements Disposable, AssetErrorListener
 	public class AssetBunny
 	{
 		public final AtlasRegion head;
+		public final Animation animNormal;
+		public final Animation animCopterTransform;
+		public final Animation animCopterTransformBack;
+		public final Animation animCopterRotate;
 
 		/**
 		 * Sets head to hold the reference to the correct region for bunny_head
@@ -187,6 +192,29 @@ public class Assets implements Disposable, AssetErrorListener
 		public AssetBunny(TextureAtlas atlas)
 		{
 			head = atlas.findRegion("bunny_head");
+			
+			Array<AtlasRegion> regions = null;
+			AtlasRegion region = null;
+			
+			// Animation: Bunny Normal
+			regions = atlas.findRegions("anim_bunny_normal");
+			animNormal = new Animation(1.0f / 10.0f, regions,
+					Animation.PlayMode.LOOP_PINGPONG);
+			
+			// Animation: Bunny Copter - knot ears
+			regions = atlas.findRegions("anim_bunny_copter");
+			animCopterTransform = new Animation(1.0f / 10.0f, regions);
+			
+			// Animation: Bunny Copter - unknot ears
+			regions = atlas.findRegions("anim_bunny_copter");
+			animCopterTransformBack = new Animation(1.0f / 10.0f, regions,
+					Animation.PlayMode.REVERSED);
+			
+			// Animation: Bunny Copter - rotate ears
+			regions = new Array<AtlasRegion>();
+			regions.add(atlas.findRegion("anim_bunny_copter", 4));
+			regions.add(atlas.findRegion("anim_bunny_copter", 5));
+			animCopterRotate = new Animation(1.0f / 15.0f, regions);
 		}
 	}
 
@@ -217,6 +245,7 @@ public class Assets implements Disposable, AssetErrorListener
 	public class AssetGoldCoin
 	{
 		public final AtlasRegion goldCoin;
+		public final Animation animGoldCoin;
 
 		/**
 		 * Sets head to hold the reference to the correct region for Gold Coin
@@ -227,6 +256,14 @@ public class Assets implements Disposable, AssetErrorListener
 		public AssetGoldCoin(TextureAtlas atlas)
 		{
 			goldCoin = atlas.findRegion("item_gold_coin");
+			
+			// Animation: Gold Coin
+			Array<AtlasRegion> regions = atlas.findRegions("anim_gold_coin");
+			AtlasRegion region = regions.first();
+			for (int i = 0; i < 10; i++)
+				regions.insert(0, region);
+			animGoldCoin = new Animation(1.0f / 20.0f, regions,
+					Animation.PlayMode.LOOP_PINGPONG);
 		}
 	}
 
