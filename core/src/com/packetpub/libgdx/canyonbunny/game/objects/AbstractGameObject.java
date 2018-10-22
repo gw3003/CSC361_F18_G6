@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
  * Makes an abstract class for all game objects to structure themselves around
@@ -27,6 +28,9 @@ public abstract class AbstractGameObject
 	public Vector2 acceleration;
 	public Rectangle bounds;
 	public Body body;
+	
+	public float stateTime;
+	public Animation animation;
 
 	/**
 	 * Builds the game object
@@ -98,6 +102,7 @@ public abstract class AbstractGameObject
 	 */
 	public void update(float deltaTime)
 	{
+		stateTime += deltaTime;
 		if (body == null)
 		{
 		updateMotionX(deltaTime);
@@ -111,6 +116,17 @@ public abstract class AbstractGameObject
 			position.set(body.getPosition());
 			rotation = body.getAngle() * MathUtils.radiansToDegrees;
 		}
+	}
+	
+	
+	/**
+	 * Gets the current animation from the animation object
+	 * @param animation animation object
+	 */
+	public void setAnimation(Animation animation)
+	{
+		this.animation = animation;
+		stateTime = 0;
 	}
 
 	/**
