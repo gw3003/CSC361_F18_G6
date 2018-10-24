@@ -9,6 +9,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.math.MathUtils;
 import com.packetpub.libgdx.canyonbunny.util.AudioManager;
+import com.badlogic.gdx.graphics.g2d.Animation;
 
 /**
  * The main character of the game that the player controls
@@ -23,6 +24,11 @@ public class BunnyHead extends AbstractGameObject
 	private final float JUMP_TIME_MAX = 0.3f;
 	private final float JUMP_TIME_MIN = 0.1f;
 	private final float JUMP_TIME_OFFSET_FLYING = JUMP_TIME_MAX - 0.018f;
+
+	private Animation animNormal;
+	private Animation animCopterTransform;
+	private Animation animCopterTransformBack;
+	private Animation animCopterRotate;
 
 	public enum VIEW_DIRECTION
 	{
@@ -55,6 +61,13 @@ public class BunnyHead extends AbstractGameObject
 	public void init()
 	{
 		dimension.set(1, 1);
+
+		animNormal = Assets.instance.bunny.animNormal;
+		animCopterTransform = Assets.instance.bunny.animCopterTransform;
+		animCopterTransformBack = Assets.instance.bunny.animCopterTransformBack;
+		animCopterRotate = Assets.instance.bunny.animCopterRotate;
+		setAnimation(animNormal);
+
 		regHead = Assets.instance.bunny.head;
 		// Center image on game object
 		origin.set(dimension.x / 2, dimension.y / 2);
@@ -83,8 +96,7 @@ public class BunnyHead extends AbstractGameObject
 	/**
 	 * Hadnles the bunny's jumping
 	 * 
-	 * @param JumpKeyPressed
-	 *            If the key is pressed
+	 * @param JumpKeyPressed If the key is pressed
 	 */
 	public void setJumping(boolean jumpKeyPressed)
 	{
@@ -118,8 +130,7 @@ public class BunnyHead extends AbstractGameObject
 	/**
 	 * Sets the bunny to have the feather pickup power
 	 * 
-	 * @param pickedUp
-	 *            if the bunny picked up the feather
+	 * @param pickedUp if the bunny picked up the feather
 	 */
 	public void setFeatherPowerup(boolean pickedUp)
 	{
@@ -154,21 +165,54 @@ public class BunnyHead extends AbstractGameObject
 		if (timeLeftFeatherPowerup > 0)
 		{
 			timeLeftFeatherPowerup -= deltaTime;
+			if (animation == animCopterTransformBack)
+			{
+				// restart "Transform" animation if another feather power up was picked up
+				// during
+				// "transformBack", Otherwise animation would be stuck while the power up is
+				// still active
+				setAnimation(animCopterTransform);
+			}
 			if (timeLeftFeatherPowerup < 0)
 			{
 				// disable power-up
 				timeLeftFeatherPowerup = 0;
 				setFeatherPowerup(false);
+				setAnimation(animCopterTransformBack);
 			}
 		}
 		dustParticles.update(deltaTime);
+
+		// Change animation state according to feather power up
+		if (hasFeatherPowerup)
+		{
+			if (animation == animNormal)
+			{
+				setAnimation(animCopterTransform);
+			} else if (animation == animCopterTransform)
+			{
+				if (animation.isAnimationFinished(stateTime))
+				{
+					setAnimation(animCopterRotate);
+				}
+			}
+		} else
+		{
+			if (animation == animCopterRotate)
+			{
+				setAnimation(animCopterTransformBack);
+			}else if (animation == animCopterTransformBack)
+			{
+				if(animation.isAnimationFinished(stateTime))
+					setAnimation(animNormal);
+			}
+		}
 	}
 
 	/**
 	 * Updates the jumping motion of the player
 	 * 
-	 * @param deltaTime
-	 *            time in the game currently
+	 * @param deltaTime time in the game currently
 	 */
 	@Override
 	protected void updateMotionY(float deltaTime)
@@ -213,9 +257,17 @@ public class BunnyHead extends AbstractGameObject
 		{
 			batch.setColor(1.0f, 0.8f, 0.0f, 1.0f);
 		}
+		float dimCorrectionX = 0;
+		float dimCorrectionY = 0;
+		if (animation != animNormal)
+		{
+			dimCorrectionX = 0.05f;
+			dimCorrectionY = 0.2f;
+		}
 		// Draw image
-		reg = regHead;
-		batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x, dimension.y, scale.x,
+		reg = animation.getKeyFrame(stateTime, true);
+		
+		batch.draw(reg.getTexture(), position.x, position.y, origin.x, origin.y, dimension.x + dimCorrectionX, dimension.y + dimCorrectionY, scale.x,
 				scale.y, rotation, reg.getRegionX(), reg.getRegionY(), reg.getRegionWidth(), reg.getRegionHeight(),
 				viewDirection == VIEW_DIRECTION.LEFT, false);
 
@@ -226,6 +278,9 @@ public class BunnyHead extends AbstractGameObject
 		dustParticles.draw(batch);
 
 		// Apply Skin Color
+		//TODO
+		
+		
 	}
 
 }

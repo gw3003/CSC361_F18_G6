@@ -26,6 +26,10 @@ import com.packetpub.libgdx.canyonbunny.util.Constants;
 import com.packetpub.libgdx.canyonbunny.util.CharacterSkin;
 import com.packetpub.libgdx.canyonbunny.util.GamePreferences;
 import com.packetpub.libgdx.canyonbunny.util.AudioManager;
+import static com.badlogic.gdx.scenes.scene2d.actions.Actions.*;
+import com.badlogic.gdx.math.Interpolation;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import com.badlogic.gdx.scenes.scene2d.Touchable;
 
 /**
  * This screen is for the main menu of the game. Has play button, option button,
@@ -134,11 +138,14 @@ public class MenuScreen extends AbstractGameScreen
 		// + Coins
 		imgCoins = new Image(skinCanyonBunny, "coins");
 		layer.addActor(imgCoins);
-		imgCoins.setPosition(135, 80);
+		//imgCoins.setPosition(135, 80);
+		imgCoins.setOrigin(imgCoins.getWidth()/2,imgCoins.getHeight() /2);
+		imgCoins.addAction(sequence(moveTo(135, -20), scaleTo(0,0),fadeOut(0),delay(2.5f),parallel(moveBy(0,100,0.5f,Interpolation.swingOut),scaleTo(1.0f,1.0f,0.25f,Interpolation.linear),alpha(1.0f,0.5f))));
 		// + Bunny
 		imgBunny = new Image(skinCanyonBunny, "bunny");
 		layer.addActor(imgBunny);
-		imgBunny.setPosition(355, 40);
+		imgBunny.addAction(sequence(moveTo(655,510),delay(4.0f),moveBy(-70,-100,0.5f, Interpolation.fade),moveBy(-100,-50,0.5f,Interpolation.fade),moveBy(-150,-300,1.0f,Interpolation.elasticIn)));
+		//imgBunny.setPosition(355, 40);
 		return layer;
 	}
 
@@ -231,7 +238,8 @@ public class MenuScreen extends AbstractGameScreen
 		// Make options window slightly transparent
 		winOptions.setColor(1, 1, 1, 0.8f);
 		// Hide options window by default
-		winOptions.setVisible(false);
+		showOptionsWindow(false,false);
+		//winOptions.setVisible(false);
 		if (debugEnabled)
 			winOptions.debug();
 		// Let TableLayout recalculate widget sizes and positions
@@ -398,6 +406,8 @@ public class MenuScreen extends AbstractGameScreen
 	private void onOptionsClicked()
 	{
 		loadSettings();
+		showMenuButtons(false);
+		showOptionsWindow(true,true);
 		btnMenuPlay.setVisible(false);
 		btnMenuOptions.setVisible(false);
 		winOptions.setVisible(true);
@@ -430,6 +440,8 @@ public class MenuScreen extends AbstractGameScreen
 	 */
 	private void onCancelClicked()
 	{
+		showMenuButtons(true);
+		showOptionsWindow(false,true);
 		btnMenuPlay.setVisible(true);
 		btnMenuOptions.setVisible(true);
 		winOptions.setVisible(false);
@@ -520,5 +532,45 @@ public class MenuScreen extends AbstractGameScreen
 	@Override
 	public void pause()
 	{
+	}
+	
+	/**
+	 * Animates the buttons on the menu
+	 */
+	private void showMenuButtons(boolean visible) 
+	{
+		float moveDuration = 1.0f;
+		Interpolation moveEasing = Interpolation.swing;
+		float delayOptionsButton = 0.25f;
+		
+		float moveX = 300 * (visible ? -1 : 1);
+		float moveY = 0 * (visible ? -1 : 1);
+		final Touchable touchEnabled = visible ? Touchable.enabled : Touchable.disabled;
+		btnMenuPlay.addAction(moveBy(moveX,moveY,moveDuration,moveEasing));
+		btnMenuOptions.addAction(sequence(delay(delayOptionsButton),moveBy(moveX, moveY, moveDuration, moveEasing)));
+		SequenceAction seq = sequence();
+		if(visible)
+		seq.addAction(delay(delayOptionsButton + moveDuration));
+		seq.addAction(run(new Runnable() 
+		{
+			public void run() 
+			{ 
+				btnMenuPlay.setTouchable(touchEnabled);
+				btnMenuPlay.setTouchable(touchEnabled);
+				btnMenuOptions.setTouchable(touchEnabled);
+			}
+		}));
+		stage.addAction(seq);
+	}
+	
+	/**
+	 * Animates buttons in Options windows
+	 */
+	private void showOptionsWindow (boolean visible,boolean animated) 
+	{
+		float alphaTo = visible ? 0.8f : 0.0f;
+		float duration = animated ? 1.0f : 0.0f;
+		Touchable touchEnabled = visible ? Touchable.enabled : Touchable.disabled;
+		winOptions.addAction(sequence(touchable(touchEnabled),alpha(alphaTo,duration)));
 	}
 }
