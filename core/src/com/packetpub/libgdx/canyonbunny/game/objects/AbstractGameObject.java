@@ -1,6 +1,7 @@
 package com.packetpub.libgdx.canyonbunny.game.objects;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.math.MathUtils;
@@ -30,7 +31,7 @@ public abstract class AbstractGameObject
 	public Body body;
 	
 	public float stateTime;
-	public Animation animation;
+	public Animation<TextureRegion> animation;
 
 	/**
 	 * Builds the game object

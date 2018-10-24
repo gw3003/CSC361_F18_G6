@@ -33,7 +33,7 @@ public class GoldCoin extends AbstractGameObject
 	{
 		dimension.set(0.5f, 0.5f);
 		
-		setAnimation(Assets.instance.goldCoin.animGoldCoin)
+		setAnimation(Assets.instance.goldCoin.animGoldCoin);
 		stateTime = MathUtils.random(0.0f, 1.0f);
 
 		// Set bounding box for collision detection
